@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { BidControlsComponent } from '../../components/bid-controls/bid-controls.component';
 import { AuctionService } from '../../services/auction.service';
 import { Bid, Dealer, LotDetails } from '../../models/interfaces';
+import { getDealerName, getDealerId } from '../../utils/dealer-utils';
 import { LotStatus } from '../../models/enums';
 
 @Component({
@@ -100,8 +101,8 @@ export class BiddingComponent {
     }
 
     // Get dealer name and ID in format compatible with Bid interface
-    const dealerName = this.getDealerName(dealer);
-    const dealerId = this.getDealerId(dealer);
+    const dealerName = getDealerName(dealer);
+    const dealerId = getDealerId(dealer);
     const dealerType = dealer.TYPE ?? 'STANDARD';
 
     const bid: Bid = {
@@ -137,8 +138,8 @@ export class BiddingComponent {
     const time1 = this.auctionService.getCurrentTime();
     
     // Get bidUser1 data in format compatible with Bid interface
-    const bidUser1Name = this.getDealerName(bidUser1);
-    const bidUser1Id = this.getDealerId(bidUser1);
+    const bidUser1Name = getDealerName(bidUser1);
+    const bidUser1Id = getDealerId(bidUser1);
     const bidUser1Type = bidUser1.TYPE ?? 'STANDARD';
     
     const bid1: Bid = {
@@ -162,8 +163,8 @@ export class BiddingComponent {
       const amount2 = amount1 + this.bidIncrement;
       
       // Get bidUser2 data in format compatible with Bid interface
-      const bidUser2Name = this.getDealerName(bidUser2);
-      const bidUser2Id = this.getDealerId(bidUser2);
+      const bidUser2Name = getDealerName(bidUser2);
+      const bidUser2Id = getDealerId(bidUser2);
       const bidUser2Type = bidUser2.TYPE ?? 'STANDARD';
       
       const bid2: Bid = {
@@ -184,14 +185,4 @@ export class BiddingComponent {
     }, 1000);
   }
 
-  // Helper method to get dealer name consistently
-  private getDealerName(dealer: Dealer): string {
-    return `${dealer.FIRSTNAME || ''} ${dealer.LASTNAME || ''}`.trim();
-  }
-
-  // Helper method to get dealer ID consistently
-  private getDealerId(dealer: Dealer): string {
-    return (dealer.USR_ID ? dealer.USR_ID.toString() : '') || 
-           (dealer.ID ? dealer.ID.toString() : '');
-  }
 }

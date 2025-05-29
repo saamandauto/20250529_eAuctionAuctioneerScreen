@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Message, Dealer } from '../../models/interfaces';
+import { getDealerName, getDealerId } from '../../utils/dealer-utils';
 
 @Component({
   selector: 'app-messages-panel',
@@ -22,7 +23,7 @@ export class MessagesPanelComponent {
 
   get filteredMessages(): Message[] {
     if (this.selectedDealer) {
-      const dealerId = this.getDealerId(this.selectedDealer);
+      const dealerId = getDealerId(this.selectedDealer);
       return this.messages.filter(msg => 
         msg.dealerId === dealerId || 
         (msg.alternate && !msg.isGlobal && msg.recipientId === dealerId)
@@ -38,32 +39,22 @@ export class MessagesPanelComponent {
 
   getMessagePlaceholder(): string {
     if (this.selectedDealer) {
-      const dealerName = this.getDealerName(this.selectedDealer);
+      const dealerName = getDealerName(this.selectedDealer);
       return `Message ${dealerName}...`;
     }
     return this.showGlobalMessages ? 'Send announcement to all dealers...' : 'Type a message...';
   }
 
-  // Get dealer name from dealer object
-  getDealerName(dealer: Dealer): string {
-    return `${dealer.FIRSTNAME || ''} ${dealer.LASTNAME || ''}`.trim();
-  }
-
-  // Get dealer ID consistently
-  getDealerId(dealer: Dealer): string {
-    return (dealer.USR_ID ? dealer.USR_ID.toString() : '') || 
-           (dealer.ID ? dealer.ID.toString() : '');
-  }
 
   // Get dealer name from dealer ID
   getDealerNameById(dealerId: string): string {
     const dealer = this.dealers.find(d => {
-      const id = this.getDealerId(d);
+      const id = getDealerId(d);
       return id === dealerId;
     });
-    
+
     if (dealer) {
-      return this.getDealerName(dealer);
+      return getDealerName(dealer);
     }
     return 'Unknown';
   }
@@ -92,7 +83,7 @@ export class MessagesPanelComponent {
   onMessageClick(message: Message) {
     if (!message.alternate && !message.isGlobal) {
       const dealer = this.dealers.find(d => {
-        const dealerId = this.getDealerId(d);
+        const dealerId = getDealerId(d);
         return dealerId === message.dealerId;
       });
       
