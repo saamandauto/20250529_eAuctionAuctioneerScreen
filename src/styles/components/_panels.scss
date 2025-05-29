@@ -1,0 +1,98 @@
+/* Panel styles */
+.panel {
+  background: white;
+  padding: 1.25rem;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  overflow: hidden;
+}
+
+.sub-panel {
+  background: #f8f9fa;
+  padding: 1.25rem;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.history-panel {
+  background: white;
+  padding: 1.25rem;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  min-width: 0;
+  height: fit-content;
+  overflow: hidden;
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: -0.25rem 0 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #eee;
+}
+
+.lot-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+}
+
+.lot-info {
+  flex: 1;
+}
+
+.bid-count {
+  background: #e9ecef;
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  color: #495057;
+}
+
+.auction-details {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.status-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #eee;
+  font-size: 0.9rem;
+}
+
+.status-row:last-child {
+  border-bottom: none;
+}
+
+.status-row span:first-child {
+  color: #666;
+}
+
+.status-row span:last-child {
+  font-weight: 500;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1440px) and (min-width: 1024px) {
+  .panel, .sub-panel, .history-panel {
+    padding: 1rem;
+  }
+  
+  .panel h4, .sub-panel h4 {
+    font-size: 1.1rem;
+    margin-top: -0.25rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  .panel-header {
+    margin-top: -0.25rem;
+    margin-bottom: 0.5rem;
+  }
+}

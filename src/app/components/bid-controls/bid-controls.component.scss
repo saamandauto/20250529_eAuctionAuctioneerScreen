@@ -1,0 +1,139 @@
+.bid-input {
+  color: #495057;
+  width: 50%;
+}
+
+.bid-input::placeholder {
+  color: #adb5bd;
+}
+
+.bid-input:focus {
+  color: #212529;
+}
+
+.input-with-button {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.input-with-button input {
+  padding: 0.75rem;
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 0.9rem;
+}
+
+.input-with-button input:disabled {
+  background-color: #e9ecef;
+  cursor: not-allowed;
+}
+
+.input-with-button button {
+  width: 50%;
+}
+
+.bid-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.bid-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.bid-increment-group {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.bid-increment-group label {
+  font-size: 0.9rem;
+  color: #495057;
+  font-weight: 500;
+  margin: 0;
+}
+
+.increment-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: transparent;
+  padding: 0;
+  border: none;
+}
+
+.increment-controls .button-icon {
+  background-color: #ff5722;
+  color: white;
+  border: none;
+}
+
+.increment-controls .button-icon:hover {
+  background-color: #f4511e;
+  color: white;
+}
+
+.increment-controls span {
+  min-width: 80px;
+  text-align: center;
+}
+
+.quick-bid-controls {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+}
+
+.shortcut-hint {
+  display: inline-block;
+  font-size: 0.75rem;
+  background: rgba(0, 0, 0, 0.1);
+  padding: 0.1rem 0.3rem;
+  border-radius: 3px;
+  margin-left: 0.25rem;
+  font-weight: bold;
+}
+
+button {
+  position: relative;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1440px) {
+  .input-with-button input {
+    padding: 0.6rem;
+    font-size: 0.85rem;
+  }
+  
+  .increment-controls span {
+    min-width: 60px;
+  }
+  
+  .bid-controls {
+    gap: 1rem;
+  }
+  
+  .quick-bid-controls {
+    gap: 0.5rem;
+  }
+}
+
+/* Ensure buttons have proper padding on smaller screens */
+@media (max-width: 1280px) {
+  .input-with-button button,
+  .quick-bid-controls button {
+    padding: 0.5rem 0.25rem;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

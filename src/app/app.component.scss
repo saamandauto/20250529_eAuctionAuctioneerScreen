@@ -1,0 +1,40 @@
+.landing-content {
+  padding: 1.5rem;
+  max-width: 1800px;
+  margin: 0 auto;
+}
+
+.main-content {
+  padding: 1.5rem;
+  max-width: 1800px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 2.3fr) minmax(0, 2.3fr) minmax(0, 2.3fr);
+  gap: 1.5rem;
+}
+
+/* Additional status indicators for navigation context */
+.navigation-status {
+  background: rgba(255, 255, 255, 0.1);
+  font-size: 0.9rem;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  margin-top: 0.5rem;
+  text-align: center;
+  color: white;
+}
+
+/* Animation for switching views */
+.fade-in {
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Settings button */
+.app-container {
+  position: relative;
+}

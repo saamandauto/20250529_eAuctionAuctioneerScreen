@@ -1,0 +1,80 @@
+<div class="dialog-overlay" *ngIf="isOpen" (click)="onClose()">
+  <div class="dialog" (click)="$event.stopPropagation()">
+    <div class="dialog-header">
+      <div class="header-content">
+        <h3>{{ title }}</h3>
+        <span class="viewer-count">
+          {{ filteredUsers.length }} of {{ users.length }} {{ type.toLowerCase() }}s
+        </span>
+      </div>
+      <button class="button-icon" (click)="onClose()">
+        <i class="ri-close-line"></i>
+      </button>
+    </div>
+    <div class="dialog-content">
+      <div class="viewer-info">
+        <p>{{ description }}</p>
+      </div>
+      <div class="search-container">
+        <div class="search-wrapper">
+          <input type="text" 
+                 class="search-input" 
+                 [placeholder]="'Search ' + type.toLowerCase() + 's...'"
+                 [(ngModel)]="searchTerm"
+                 (input)="filterUsers()">
+        </div>
+      </div>
+      <div class="table-container">
+        <table class="viewers-table">
+          <thead>
+            <tr>
+              <th (click)="sort('name')" class="sortable" [class.active]="sortColumn === 'name'">
+                <div class="th-content">
+                  <span>Dealer</span>
+                  <i class="sort-icon" [class.asc]="sortColumn === 'name' && sortDirection === 'asc'"
+                                    [class.desc]="sortColumn === 'name' && sortDirection === 'desc'"></i>
+                </div>
+              </th>
+              <th (click)="sort('type')" class="sortable" [class.active]="sortColumn === 'type'">
+                <div class="th-content">
+                  <span>Type</span>
+                  <i class="sort-icon" [class.asc]="sortColumn === 'type' && sortDirection === 'asc'"
+                                    [class.desc]="sortColumn === 'type' && sortDirection === 'desc'"></i>
+                </div>
+              </th>
+              <th (click)="sort('lastBuy')" class="sortable" [class.active]="sortColumn === 'lastBuy'">
+                <div class="th-content">
+                  <span>Last Buy</span>
+                  <i class="sort-icon" [class.asc]="sortColumn === 'lastBuy' && sortDirection === 'asc'"
+                                    [class.desc]="sortColumn === 'lastBuy' && sortDirection === 'desc'"></i>
+                </div>
+              </th>
+              <th (click)="sort('lastActive')" class="sortable" [class.active]="sortColumn === 'lastActive'">
+                <div class="th-content">
+                  <span>Last Active</span>
+                  <i class="sort-icon" [class.asc]="sortColumn === 'lastActive' && sortDirection === 'asc'"
+                                    [class.desc]="sortColumn === 'lastActive' && sortDirection === 'desc'"></i>
+                </div>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of sortedUsers">
+              <td>{{ user.name }} ({{ user.dealerId }})</td>
+              <td>
+                <span class="dealer-type" [class]="user.type.toLowerCase()">
+                  {{ user.type }}
+                </span>
+              </td>
+              <td>{{ user.lastBuy }}</td>
+              <td>{{ user.lastActive }}</td>
+            </tr>
+            <tr *ngFor="let empty of emptyRows" class="empty-row">
+              <td colspan="4">&nbsp;</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

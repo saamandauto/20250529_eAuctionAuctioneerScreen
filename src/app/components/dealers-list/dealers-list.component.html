@@ -1,0 +1,104 @@
+<div class="history-panel">
+  <div class="panel-header">
+    <h3>Dealers</h3>
+    <span class="bid-count">{{ filteredDealers.length }} dealers</span>
+  </div>
+
+  <div class="filter-controls">
+    <button class="button filter-button" 
+            [class.active]="currentFilter === 'all'"
+            (click)="setFilter('all')">
+      All
+    </button>
+    <button class="button filter-button" 
+            [class.active]="currentFilter === 'viewers'"
+            (click)="setFilter('viewers')">
+      <i class="ri-eye-line"></i>
+    </button>
+    <button class="button filter-button" 
+            [class.active]="currentFilter === 'watchers'"
+            (click)="setFilter('watchers')">
+      <i class="ri-star-line"></i>
+    </button>
+    <button class="button filter-button" 
+            [class.active]="currentFilter === 'leads'"
+            (click)="setFilter('leads')">
+      <i class="ri-list-check-2"></i>
+    </button>
+    <button class="button filter-button" 
+            [class.active]="currentFilter === 'online'"
+            (click)="setFilter('online')">
+      <i class="ri-user-line"></i>
+    </button>
+  </div>
+
+  <div class="search-container">
+    <div class="search-wrapper">
+      <input type="text" 
+             class="search-input" 
+             placeholder="Search dealers..."
+             [(ngModel)]="searchTerm"
+             (input)="filterDealers()">
+    </div>
+  </div>
+
+  <div class="table-container" [class.expanded]="expanded">
+    <table class="history-table">
+      <thead>
+        <tr>
+          <th>Dealer</th>
+          <th>Status</th>
+          <th>Messages</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let dealer of displayedDealers"
+            [title]="getDealerTooltip(dealer)"
+            (click)="onDealerClick(dealer)"
+            [class.selected]="isSelected(dealer)"
+            class="clickable">
+          <td>
+            {{ getDealerName(dealer) }}
+          </td>
+          <td>
+            <div class="dealer-status">
+              <span class="status-icon" *ngIf="getDealerStatus(getDealerId(dealer))?.isViewer">
+                <i class="ri-eye-line" title="Viewer"></i>
+              </span>
+              <span class="status-icon" *ngIf="getDealerStatus(getDealerId(dealer))?.isWatcher">
+                <i class="ri-star-line" title="Watcher"></i>
+              </span>
+              <span class="status-icon" *ngIf="getDealerStatus(getDealerId(dealer))?.isLead">
+                <i class="ri-list-check-2" title="Lead"></i>
+              </span>
+              <span class="status-icon" *ngIf="getDealerStatus(getDealerId(dealer))?.isOnline">
+                <i class="ri-user-line" title="Online"></i>
+              </span>
+            </div>
+          </td>
+          <td>
+            <div class="message-count" *ngIf="getMessageCount(getDealerId(dealer)).total > 0">
+              {{ getMessageCount(getDealerId(dealer)).total }}
+              <span class="unread-count" *ngIf="getMessageCount(getDealerId(dealer)).unread > 0">
+                ({{ getMessageCount(getDealerId(dealer)).unread }} new)
+              </span>
+            </div>
+          </td>
+        </tr>
+        <tr *ngIf="displayedDealers.length === 0" class="empty-row">
+          <td colspan="3" style="text-align: center; padding: 20px;">
+            <div>No dealers found</div>
+          </td>
+        </tr>
+        <tr *ngFor="let empty of emptyRows" class="empty-row">
+          <td colspan="3">&nbsp;</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <button *ngIf="filteredDealers.length > 10" 
+         class="show-more-button" 
+         (click)="toggleExpanded()">
+    {{ expanded ? 'Show less' : 'Show more' }}
+  </button>
+</div>

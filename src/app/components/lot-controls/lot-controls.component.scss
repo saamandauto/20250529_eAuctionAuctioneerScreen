@@ -1,0 +1,124 @@
+.timer {
+  color: #ff5722;
+  font-weight: bold;
+  font-size: 1.2rem;
+  text-align: center;
+  padding: 0.75rem;
+  background: #fff3ef;
+  border-radius: 6px;
+  min-height: 3.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.timer.active {
+  color: #155724;
+  background: #d4edda;
+}
+
+.timer.sold {
+  color: #004085;
+  background: #cce5ff;
+}
+
+.timer.no-sale {
+  color: #721c24;
+  background: #f8d7da;
+}
+
+.timer.withdrawn {
+  color: #856404;
+  background: #fff3cd;
+}
+
+/* Add animation for dots */
+.dots-animation {
+  display: inline-block;
+  min-width: 30px; /* Ensure space for dots */
+}
+
+.hammer-button {
+  background-color: #ff5722;
+  color: white;
+  font-weight: bold;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.hammer-button i {
+  font-size: 1.2rem;
+}
+
+.hammer-button:disabled {
+  background-color: #ffccbc;
+}
+
+.lot-controls {
+  display: grid;
+  gap: 0.75rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.control-buttons {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+}
+
+.shortcut-hint {
+  display: inline-block;
+  font-size: 0.75rem;
+  background: rgba(0, 0, 0, 0.1);
+  padding: 0.1rem 0.3rem;
+  border-radius: 3px;
+  margin-left: 0.25rem;
+  font-weight: bold;
+}
+
+button {
+  position: relative;
+}
+
+/* Withdraw button styling */
+.button-withdraw {
+  background-color: #ffc107;
+  color: #212529;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  animation: pulse-yellow 1.5s infinite;
+}
+
+/* Pulsing animation for withdraw button */
+@keyframes pulse-yellow {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 193, 7, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 5px rgba(255, 193, 7, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 193, 7, 0);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 1440px) {
+  .timer {
+    min-height: 3rem;
+    font-size: 1.1rem;
+    padding: 0.5rem;
+  }
+  
+  .control-buttons {
+    gap: 0.5rem;
+  }
+  
+  .lot-controls {
+    gap: 0.5rem;
+  }
+}

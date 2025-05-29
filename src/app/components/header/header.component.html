@@ -1,0 +1,79 @@
+<div class="header">
+  <div class="header-content">
+    <div class="brand">
+      <img src="assets/images/autorola-logo.png" alt="Logo" class="logo">
+      <div class="title-group">
+        <h1>{{ auctionTitle }} <span class="auction-id">(1067268)</span> <span class="version">v0.3.0</span></h1>
+        <div class="auction-info">
+          <span class="auction-date">Thursday, December 13, 13:00</span>
+          <span class="separator">•</span>
+          <span>Auto Cars Great Britain Ltd</span>
+        </div>
+      </div>
+    </div>
+    <div class="actions">
+      <div class="current-time">{{ currentDateTime }}</div>
+      
+      <!-- Navigation buttons -->
+      <ng-container *ngIf="isAuctionStarted">
+        <button class="button button-view" (click)="onToggleView()">
+          <i [class]="isViewingLots ? 'ri-auction-line' : 'ri-list-check-2'"></i>
+          {{ isViewingLots ? 'View Auction' : 'View Planned Lots' }}
+        </button>
+        
+        <button class="button button-primary" (click)="onEndAuction()">
+          <i class="ri-stop-circle-line"></i>
+          End Auction
+        </button>
+      </ng-container>
+      
+      <button *ngIf="!isAuctionStarted" class="button button-start" (click)="onStartAuction()">
+        <i class="ri-play-circle-line"></i>
+        Start Auction
+      </button>
+      
+      <div class="voice-button-container">
+        <button 
+          class="button"
+          [class.button-voice-on]="voiceEnabled && !hasCreditsError"
+          [class.button-voice-off]="!voiceEnabled"
+          [class.button-voice-error]="hasCreditsError"
+          (click)="toggleVoice()"
+          title="Toggle Voice Assistant">
+          <i [class]="voiceEnabled && !hasCreditsError ? 'ri-volume-up-fill' : hasCreditsError ? 'ri-volume-off-fill' : 'ri-volume-mute-fill'"></i>
+          Voice
+        </button>
+        <span class="error-badge" *ngIf="hasCreditsError" title="ElevenLabs API credits exhausted or API key invalid">!</span>
+      </div>
+      
+      <div class="voice-button-container">
+        <button 
+          class="button speech-button"
+          [class.speech-active]="isListeningValue"
+          [class.button-voice-on]="isListeningValue"
+          [class.button-voice-off]="!isListeningValue"
+          title="Press ALT+T to activate speech recognition">
+          <div class="mic-container">
+            <i class="mic-icon" [class]="isListeningValue ? 'ri-mic-fill' : 'ri-mic-off-fill'"></i>
+            <div class="sound-wave" *ngIf="isListeningValue">
+              <span class="wave-bar"></span>
+              <span class="wave-bar"></span>
+              <span class="wave-bar"></span>
+              <span class="wave-bar"></span>
+            </div>
+          </div>
+          <span>Talk</span>
+          <span class="shortcut-hint" *ngIf="showShortcutsInUI">Alt+T</span>
+        </button>
+      </div>
+      
+      <button class="button button-icon" title="Settings" (click)="onOpenSettings()">
+        <i class="ri-settings-line"></i>
+      </button>
+      
+      <button class="button button-icon" title="Help">
+        <i class="ri-question-line"></i>
+      </button>
+    </div>
+  </div>
+</div>

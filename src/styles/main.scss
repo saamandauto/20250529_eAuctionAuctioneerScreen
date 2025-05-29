@@ -1,0 +1,128 @@
+/* Import all style modules */
+@import 'ngx-toastr/toastr';
+
+/* Override toastr colors */
+.toast-warning {
+  background-color: #ff5722 !important;
+}
+
+.toast-error {
+  background-color: #ff5722 !important;
+}
+
+/* Base styles */
+@import 'base/reset';
+@import 'base/typography';
+
+/* Components */
+@import 'components/buttons';
+@import 'components/panels';
+@import 'components/tables';
+@import 'components/status';
+@import 'components/header';
+@import 'components/vehicle';
+@import 'components/controls';
+@import 'components/messages';
+@import 'components/dialog';
+@import 'components/search';
+@import 'components/misc';
+
+/* Layout */
+@import 'layout/grid';
+
+/* Global styles */
+:root {
+  --primary-color: #ff5722;
+  --primary-dark: #d84315;
+  --primary-darker: #bf360c;
+  --text-color: #212529;
+  --text-muted: #6c757d;
+  --border-color: #dee2e6;
+  --background-light: #f8f9fa;
+  --background-lighter: #e9ecef;
+}
+
+/* Toast positioning - move to bottom right */
+.toast-container {
+  position: fixed;
+  z-index: 999999;
+  bottom: 12px;
+  right: 12px;
+}
+
+/* Landing page styles */
+.landing-content {
+  padding: 1.5rem;
+  max-width: 1800px;
+  margin: 0 auto;
+}
+
+.planned-lots-panel {
+  background: white;
+  padding: 1.5rem 2rem;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  overflow: hidden;
+  
+  h2 {
+    font-size: 1.5rem;
+    margin: 0 0 1.5rem;
+    color: #333;
+    font-weight: 600;
+  }
+}
+
+.edit-button {
+  background: none;
+  border: none;
+  color: #6c757d;
+  cursor: pointer;
+  opacity: 0.5;
+  transition: opacity 0.2s;
+  padding: 0.25rem;
+  margin-left: 0.5rem;
+  
+  &:hover {
+    opacity: 1;
+    color: var(--primary-color);
+  }
+}
+
+.edit-field {
+  display: flex;
+  align-items: center;
+  
+  input {
+    width: 80px;
+    padding: 0.25rem 0.5rem;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 0.85rem;
+  }
+  
+  .edit-actions {
+    display: flex;
+    margin-left: 0.5rem;
+  }
+  
+  .save-button, .cancel-button {
+    background: none;
+    border: none;
+    padding: 0.25rem;
+    cursor: pointer;
+  }
+  
+  .save-button {
+    color: #28a745;
+    &:hover {
+      color: darken(#28a745, 10%);
+    }
+  }
+  
+  .cancel-button {
+    color: #dc3545;
+    &:hover {
+      color: darken(#dc3545, 10%);
+    }
+  }
+}

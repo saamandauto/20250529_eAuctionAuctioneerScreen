@@ -1,0 +1,64 @@
+/* Vehicle details styles */
+.vehicle-details {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.detail-row {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.25rem 0;
+  align-items: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.detail-label {
+  color: #666;
+  min-width: 60px;
+  flex-shrink: 0;
+}
+
+.detail-value {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.vehicle-stats {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid #dee2e6;
+  grid-column: 1 / -1;
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 6px;
+  transition: background-color 0.2s;
+}
+
+.stat-item:hover {
+  background-color: #f1f3f5;
+}
+
+.stat-item i {
+  font-size: 1.25rem;
+  color: #495057;
+}
+
+.stat-item span {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #212529;
+}

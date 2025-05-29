@@ -1,0 +1,27 @@
+/* Search styles */
+.search-container {
+  margin-bottom: 0.75rem;
+}
+
+.search-wrapper {
+  max-width: 300px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  font-size: 0.85rem;
+  transition: all 0.2s ease;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(255, 87, 34, 0.1);
+}
+
+.search-input::placeholder {
+  color: var(--text-muted);
+}

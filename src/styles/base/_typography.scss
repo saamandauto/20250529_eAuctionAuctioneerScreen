@@ -1,0 +1,32 @@
+/* Typography styles */
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  line-height: 1.2;
+}
+
+.lot-info.compact h2 {
+  margin: 0;
+  line-height: 1.2;
+  font-size: 1.4rem;
+}
+
+.panel h4 {
+  font-size: 1.4rem;
+  margin: -0.5rem 0 1rem;
+  color: #333;
+  font-weight: 600;
+}
+
+.sub-panel h4 {
+  font-size: 1.2rem;
+  margin: -0.2rem 0 0.5rem;
+  color: #333;
+  font-weight: 600;
+}
+
+.panel-header h3 {
+  font-size: 1.4rem;
+  margin: 0;
+  color: #333;
+  font-weight: 600;
+}

@@ -1,0 +1,60 @@
+<div class="history-panel">
+  <div class="panel-header">
+    <h3>Lots</h3>
+    <span class="bid-count">{{ lots.length }} lots</span>
+  </div>
+  <div class="search-container">
+    <div class="search-wrapper">
+      <input type="text" 
+             class="search-input" 
+             placeholder="Search lots..."
+             [(ngModel)]="searchTerm"
+             (input)="filterLots()">
+    </div>
+  </div>
+  <div class="table-container" [class.expanded]="expanded">
+    <table class="history-table">
+      <thead>
+        <tr>
+          <th>Lot</th>
+          <th>Vehicle</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let lot of displayedLots" 
+            (click)="onSelectLot(lot)" 
+            [class.clickable]="canSelectLot(lot) || lot.status === 'Sold'"
+            [class.disabled]="!canSelectLot(lot) && lot.status !== 'Sold'">
+          <td>{{ lot.lotNumber }}</td>
+          <td>{{ lot.make }} {{ lot.model }}</td>
+          <td>
+            <span class="lot-status-badge" 
+                  [class]="lot.status ? lot.status.toLowerCase() : 'pending'">
+              {{ lot.status || 'Pending' }}
+            </span>
+          </td>
+        </tr>
+        <tr *ngIf="displayedLots.length === 0" class="empty-row">
+          <td colspan="3" style="text-align: center; padding: 20px;">
+            <div>No lots found</div>
+          </td>
+        </tr>
+        <tr *ngFor="let empty of emptyRows" class="empty-row">
+          <td colspan="3">&nbsp;</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <button *ngIf="filteredLots.length > 10" 
+         class="show-more-button" 
+         (click)="toggleExpanded()">
+    {{ expanded ? 'Show less' : 'Show more' }}
+  </button>
+</div>
+
+<app-lot-result-dialog
+  [isOpen]="isResultDialogOpen"
+  [lot]="selectedLot"
+  [onClose]="closeResultDialog">
+</app-lot-result-dialog>

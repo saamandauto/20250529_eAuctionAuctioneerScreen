@@ -1,0 +1,43 @@
+<div class="history-panel">
+  <div class="panel-header">
+    <h3>Bid History</h3>
+    <span class="bid-count">{{ bids.length }} bids</span>
+  </div>
+  <div class="table-container" [class.expanded]="expanded">
+    <table class="history-table">
+      <thead>
+        <tr>
+          <th>Bidder</th>
+          <th>Amount</th>
+          <th>Time</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let bid of displayedBids" 
+            [title]="getBidderTooltip(bid)"
+            class="compact-row">
+          <td>
+            <span [class.user-bid]="bid.bidType === 'BID1' || bid.bidType === 'BID2' || bid.bidType === 'WAR'">
+              {{ bid.bidder }}
+            </span>
+          </td>
+          <td>£{{ bid.amount }}</td>
+          <td>{{ bid.time }}</td>
+        </tr>
+        <tr *ngIf="displayedBids.length === 0" class="empty-row">
+          <td colspan="3" style="text-align: center; padding: 20px;">
+            <div>No bids yet</div>
+          </td>
+        </tr>
+        <tr *ngFor="let empty of emptyRows" class="empty-row">
+          <td colspan="3">&nbsp;</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <button *ngIf="bids.length > 10" 
+         class="show-more-button" 
+         (click)="toggleExpanded()">
+    {{ expanded ? 'Show less' : 'Show more' }}
+  </button>
+</div>

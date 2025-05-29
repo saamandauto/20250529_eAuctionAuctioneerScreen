@@ -1,0 +1,84 @@
+<div class="sub-panel">
+  <h4>Bid Controls</h4>
+  <div class="bid-controls">
+    <div class="bid-input-group">
+      <div class="input-with-button">
+        <input type="number" 
+               [(ngModel)]="localAskingPrice" 
+               [min]="minBidAmount"
+               [step]="bidIncrement"
+               [disabled]="!isActive || isAboveReserve"
+               (input)="onAskingPriceInput()"
+               class="bid-input">
+        <button class="button button-primary" 
+                (click)="onSetAskingPrice()"
+                [disabled]="!isActive || !canControlLot || localAskingPrice <= (currentHighestBid || 0) || isAboveReserve">
+          New Asking Price
+        </button>
+      </div>
+    </div>
+
+    <div class="bid-increment-group">
+      <label>Bid Increment</label>
+      <div class="increment-controls">
+        <button class="button button-icon" 
+                (click)="onAdjustBidIncrement(-1)"
+                [disabled]="!isActive || !canControlLot || bidIncrement <= 100">
+          <i class="ri-subtract-line"></i>
+        </button>
+        <span>£{{ bidIncrement }}</span>
+        <button class="button button-icon" 
+                (click)="onAdjustBidIncrement(1)"
+                [disabled]="!isActive || !canControlLot">
+          <i class="ri-add-line"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="bid-input-group">
+      <div class="input-with-button">
+        <input type="number" 
+               [(ngModel)]="newBidAmount" 
+               [min]="minBidAmount"
+               [step]="bidIncrement"
+               [disabled]="!isActive"
+               (input)="onBidAmountInput()"
+               (keydown)="onBidAmountKeyDown($event)"
+               placeholder="Enter bid amount for Bid User 1"
+               class="bid-input">
+        <button class="button button-primary"
+                (click)="onPlaceBid('user1')" 
+                [disabled]="!isActive || !canControlLot || newBidAmount < askingPrice">
+          Place Bid
+        </button>
+      </div>
+    </div>
+
+    <div class="quick-bid-controls">
+      <button class="button" 
+              (click)="onPlaceBid('user1')" 
+              [disabled]="!isActive || !canControlLot">
+        Bid User 1
+        <span class="shortcut-hint" *ngIf="showShortcutsInUI">Alt+1</span>
+      </button>
+      <button class="button" 
+              (click)="onPlaceBid('user2')" 
+              [disabled]="!isActive || !canControlLot">
+        Bid User 2
+        <span class="shortcut-hint" *ngIf="showShortcutsInUI">Alt+2</span>
+      </button>
+      <button class="button" 
+              (click)="onPlaceBid('random')" 
+              [disabled]="!isActive || !canControlLot">
+        Random Bid
+        <span class="shortcut-hint" *ngIf="showShortcutsInUI">Alt+R</span>
+      </button>
+      <button class="button" 
+              (click)="onStartBidWar()" 
+              [disabled]="!isActive || !canControlLot">
+        Bid War
+        <span class="shortcut-hint" *ngIf="showShortcutsInUI">Alt+W</span>
+      </button>
+    </div>
+  </div>
+</div>

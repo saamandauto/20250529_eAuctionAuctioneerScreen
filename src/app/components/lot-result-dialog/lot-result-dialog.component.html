@@ -1,0 +1,71 @@
+<div class="dialog-overlay" *ngIf="isOpen" (click)="onClose()">
+  <div class="dialog" (click)="$event.stopPropagation()">
+    <div class="dialog-header">
+      <div class="header-content">
+        <h3>Lot {{ lot?.lotNumber }} Results - {{ lot?.make }} {{ lot?.model }}</h3>
+      </div>
+      <button class="button-icon" (click)="onClose()">
+        <i class="ri-close-line"></i>
+      </button>
+    </div>
+
+    <div class="dialog-content">
+      <div class="result-summary">
+        <div class="summary-row">
+          <span>Final Price:</span>
+          <span class="price">£{{ (finalState?.soldPrice || 0).toLocaleString() }}</span>
+        </div>
+        <div class="summary-row">
+          <span>Reserve Price:</span>
+          <span>£{{ (finalState?.reservePrice || 0).toLocaleString() }}</span>
+        </div>
+        <div class="summary-row">
+          <span>Performance:</span>
+          <span [class.negative]="(finalState?.performance?.value || 0) < 0"
+                [class.positive]="(finalState?.performance?.value || 0) > 0">
+            {{ finalState?.performance?.text || '-' }}
+          </span>
+        </div>
+        <div class="summary-row">
+          <span>Sold Time:</span>
+          <span>{{ finalState?.soldTime || '-' }}</span>
+        </div>
+        <div class="summary-row">
+          <span>Sold To:</span>
+          <span>{{ finalState?.soldTo || '-' }}</span>
+        </div>
+      </div>
+
+      <div class="bid-history">
+        <div class="bid-history-header">
+          <h4>Bid History</h4>
+          <span class="bid-count">{{ bids.length }} bids</span>
+        </div>
+        <div class="table-container">
+          <table class="history-table">
+            <thead>
+              <tr>
+                <th>Bidder</th>
+                <th>Amount</th>
+                <th>Time</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let bid of bids" 
+                  [title]="getBidderTooltip(bid)"
+                  class="compact-row">
+                <td>
+                  <span [class.user-bid]="bid.bidType === 'BID1' || bid.bidType === 'BID2' || bid.bidType === 'WAR'">
+                    {{ bid.bidder }}
+                  </span>
+                </td>
+                <td>£{{ bid.amount.toLocaleString() }}</td>
+                <td>{{ bid.time }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

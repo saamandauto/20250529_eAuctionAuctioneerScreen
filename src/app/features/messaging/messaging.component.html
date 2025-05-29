@@ -1,0 +1,9 @@
+<div class="messaging-container">
+  <app-messages-panel
+    [messages]="messages"
+    [selectedDealer]="selectedDealer"
+    [dealers]="dealers"
+    (sendMessage)="onSendMessage($event)"
+    (selectDealer)="onSelectDealer($event)">
+  </app-messages-panel>
+</div>

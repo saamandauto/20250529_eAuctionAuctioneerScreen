@@ -1,0 +1,32 @@
+<div class="panel">
+  <h4>Auction Statistics</h4>
+  <div class="auction-details">
+    <div class="status-row">
+      <span>Total Lots:</span>
+      <span>20</span>
+    </div>
+    <div class="status-row">
+      <span>Sold:</span>
+      <span>{{ soldLots }}</span>
+    </div>
+    <div class="status-row">
+      <span>Withdrawn:</span>
+      <span>{{ withdrawnLots }}</span>
+    </div>
+    <div class="status-row">
+      <span>Total Bids from Dealers:</span>
+      <span>{{ dealerBids }}</span>
+    </div>
+    <div class="status-row">
+      <span>Auctioneer Bids:</span>
+      <span>{{ auctioneerBids }}</span>
+    </div>
+    <div class="status-row">
+      <span>Auction Performance:</span>
+      <span [class.negative]="performance.percentage.startsWith('-')"
+            [class.positive]="!performance.percentage.startsWith('-')">
+        {{ performance.sum }} ({{ performance.percentage }})
+      </span>
+    </div>
+  </div>
+</div>

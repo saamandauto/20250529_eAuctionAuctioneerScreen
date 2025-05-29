@@ -1,0 +1,417 @@
+.planned-lots-panel {
+  background: white;
+  padding: 1.2rem;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  overflow: hidden;
+  font-family: 'IBM Plex Sans', sans-serif;
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.panel-header h2 {
+  font-size: 1.3rem;
+  margin: 0;
+  color: #333;
+  font-weight: 600;
+}
+
+.view-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.lot-count {
+  background: #e9ecef;
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  color: #495057;
+}
+
+.view-toggle-button {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.5rem;
+  font-size: 0.8rem;
+  background: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #495057;
+  transition: all 0.2s ease;
+}
+
+.view-toggle-button:hover {
+  background: #e9ecef;
+}
+
+.view-toggle-button.active {
+  background: #e3f2fd;
+  color: #1976d2;
+  border-color: #1976d2;
+}
+
+.view-toggle-button i {
+  font-size: 0.85rem;
+}
+
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+  margin-bottom: 0.75rem;
+  -webkit-overflow-scrolling: touch;
+}
+
+.lots-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+  font-family: 'IBM Plex Sans', sans-serif;
+  
+  th, td {
+    padding: 0.4rem 0.5rem;
+    border-bottom: 1px solid #dee2e6;
+    white-space: nowrap;
+    text-align: left;
+    font-family: 'IBM Plex Sans', sans-serif;
+  }
+  
+  th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+    border-top: 1px solid #dee2e6;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    font-size: 0.8rem;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #f8f9fa;
+  }
+  
+  tr:hover {
+    background-color: #e9ecef;
+  }
+  
+  &.reorder-mode {
+    tbody tr {
+      cursor: move;
+      
+      &:hover {
+        background-color: #e3f2fd;
+      }
+    }
+  }
+}
+
+.drag-handle-cell {
+  width: 40px;
+  text-align: center;
+}
+
+.drag-handle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem;
+  cursor: grab;
+  color: #6c757d;
+  
+  &:hover {
+    color: #1976d2;
+  }
+  
+  i {
+    font-size: 1.25rem;
+  }
+}
+
+.drag-row {
+  transition: background-color 0.3s ease;
+}
+
+.drag-row.cdk-drag-preview {
+  background-color: #e3f2fd;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+  opacity: 0.9;
+  border-radius: 4px;
+}
+
+.drag-row.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.drag-row.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.cdk-drop-list-dragging .drag-row:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.drag-preview {
+  background-color: #e3f2fd;
+  border-radius: 4px;
+  padding: 0.75rem 1rem;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+  width: auto;
+  max-width: 600px;
+  margin: 0.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.drag-preview-content {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.disabled-sort {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.sortable-header {
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  padding-right: 1.25rem;
+  
+  &:hover {
+    background-color: #e9ecef;
+  }
+  
+  .sort-icon {
+    position: absolute;
+    right: 0.4rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #ff5722;
+    
+    i {
+      font-size: 0.85rem;
+      display: block;
+    }
+  }
+}
+
+.edit-button {
+  background: none;
+  border: none;
+  color: #6c757d;
+  cursor: pointer;
+  opacity: 0.5;
+  transition: opacity 0.2s;
+  padding: 0.2rem;
+  margin-left: 0.25rem;
+  
+  &:hover {
+    opacity: 1;
+    color: #ff5722;
+  }
+  
+  i {
+    font-size: 0.8rem;
+  }
+}
+
+.edit-field {
+  display: flex;
+  align-items: center;
+  
+  input {
+    width: 65px;
+    padding: 0.2rem 0.3rem;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-family: 'IBM Plex Sans', sans-serif;
+  }
+  
+  .edit-actions {
+    display: flex;
+    margin-left: 0.2rem;
+  }
+  
+  .save-button, .cancel-button {
+    background: none;
+    border: none;
+    padding: 0.15rem;
+    cursor: pointer;
+    font-size: 0.8rem;
+  }
+  
+  .save-button {
+    color: #28a745;
+    &:hover {
+      color: darken(#28a745, 10%);
+    }
+  }
+  
+  .cancel-button {
+    color: #dc3545;
+    &:hover {
+      color: darken(#dc3545, 10%);
+    }
+  }
+}
+
+.dealer-activity {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.15rem;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+  
+  &.clickable {
+    cursor: pointer;
+    
+    &:hover {
+      background-color: #f1f3f5;
+    }
+  }
+  
+  i {
+    font-size: 0.8rem;
+    color: #495057;
+  }
+  
+  span {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: #212529;
+  }
+}
+
+/* Remove custom tooltip styling - keep only native browser tooltips */
+[title] {
+  position: relative;
+}
+
+/* Toggle view styling - Medium screens (1024px-1620px) */
+@media (min-width: 1025px) and (max-width: 1620px) {
+  :host {
+    --toggle-visible: block;
+  }
+  
+  .lots-table.compact-view {
+    .toggle-column {
+      display: none;
+    }
+  }
+  
+  .lots-table.detailed-view {
+    .toggle-column {
+      display: table-cell;
+    }
+  }
+}
+
+/* Small screens (under 1024px) */
+@media (max-width: 1024px) {
+  :host {
+    --toggle-visible: none;
+  }
+  
+  .planned-lots-panel {
+    padding: 0.75rem;
+  }
+  
+  /* Always hide these columns regardless of view mode */
+  .toggle-column {
+    display: none;
+  }
+  
+  .lots-table th,
+  .lots-table td {
+    padding: 0.35rem 0.4rem;
+    font-size: 0.75rem;
+  }
+  
+  .edit-field input {
+    width: 60px;
+    padding: 0.2rem 0.3rem;
+  }
+  
+  .panel-header h2 {
+    font-size: 1.2rem;
+  }
+}
+
+/* Very small screens */
+@media (max-width: 580px) {
+  .planned-lots-panel {
+    padding: 0.6rem;
+  }
+  
+  .lots-table th:nth-child(12), /* Last Auction */
+  .lots-table td:nth-child(12),
+  .lots-table th:nth-child(13), /* Indicata Price */
+  .lots-table td:nth-child(13) {
+    display: none;
+  }
+  
+  .lots-table th,
+  .lots-table td {
+    padding: 0.3rem;
+    font-size: 0.7rem;
+  }
+  
+  .panel-header h2 {
+    font-size: 1.1rem;
+  }
+  
+  .edit-button {
+    padding: 0.15rem;
+  }
+  
+  .dealer-activity {
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+  
+  .stat-item {
+    padding: 0.1rem;
+  }
+  
+  .stat-item i {
+    font-size: 0.7rem;
+  }
+  
+  .stat-item span {
+    font-size: 0.7rem;
+  }
+  
+  .edit-field input {
+    width: 55px;
+  }
+}
+
+/* Large screens (over 1620px) */
+@media (min-width: 1621px) {
+  :host {
+    --toggle-visible: none;
+  }
+  
+  /* Always show all columns on large screens */
+  .toggle-column {
+    display: table-cell;
+  }
+}

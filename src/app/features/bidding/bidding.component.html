@@ -1,0 +1,20 @@
+<div class="bidding-container">
+  <app-bid-controls
+    [canControlLot]="canControlLot"
+    [startPrice]="startPrice"
+    [currentHighestBid]="currentHighestBid"
+    [askingPrice]="askingPrice"
+    [bidIncrement]="bidIncrement"
+    [newBidAmount]="newBidAmount"
+    [lotStatus]="lotStatus"
+    [currentLot]="currentLot"
+    [dealers]="dealers"
+    [bids]="bids"
+    [simulatedBiddingEnabled]="simulatedBiddingEnabled"
+    (setAskingPrice)="onSetAskingPrice($event)"
+    (adjustBidIncrement)="onAdjustBidIncrement($event)"
+    (makeNewHighBid)="onMakeNewHighBid()"
+    (placeBid)="onPlaceBid($event)"
+    (startBidWar)="onStartBidWar()">
+  </app-bid-controls>
+</div>

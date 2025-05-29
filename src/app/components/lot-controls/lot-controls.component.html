@@ -1,0 +1,55 @@
+<div class="sub-panel">
+  <h4>Lot Controls</h4>
+  <div class="lot-controls">
+    <div class="control-buttons">
+      <button class="button" 
+              (click)="onStartLot()" 
+              [disabled]="lotStatus !== LotStatus.PENDING">
+        Start lot
+        <span class="shortcut-hint" *ngIf="showShortcutsInUI">Alt+X</span>
+      </button>
+      <button class="button" 
+              (click)="onMoveLot()" 
+              [disabled]="lotStatus !== LotStatus.SOLD && lotStatus !== LotStatus.NO_SALE && lotStatus !== LotStatus.WITHDRAWN">
+        Move to Next Lot
+        <span class="shortcut-hint" *ngIf="showShortcutsInUI">Alt+X</span>
+      </button>
+      <button class="button" 
+              (click)="onNoSale()" 
+              [disabled]="lotStatus !== LotStatus.ACTIVE || withdrawCountdownActive">
+        No Sale
+      </button>
+      <button class="button" 
+              [class.button-withdraw]="withdrawCountdownActive"
+              (click)="onWithdrawLot()" 
+              [disabled]="lotStatus !== LotStatus.ACTIVE">
+        {{ withdrawCountdownActive ? 'Cancel Withdraw' : 'Withdraw Lot' }}
+      </button>
+    </div>
+    <button class="button" 
+            style="width: 100%" 
+            (click)="onMarkAsSold()"
+            [disabled]="!canUseHammer || withdrawCountdownActive">
+      Mark as Sold
+    </button>
+    <div class="timer" [ngClass]="timerClass">
+      <span>{{ statusText }}</span><span *ngIf="dots.length > 0" class="dots-animation">{{ dots }}</span>
+    </div>
+    <button class="button hammer-button" 
+            (click)="startHammerSequence()" 
+            [disabled]="!canUseHammer || lotStatus !== LotStatus.ACTIVE || isHammerSequenceInProgress() || !hasBids || withdrawCountdownActive">
+      <i class="ri-hammer-line"></i> Hammer
+      <span class="shortcut-hint" *ngIf="showShortcutsInUI">Alt+H</span>
+    </button>
+  </div>
+  
+  <!-- Custom Confirmation Dialog -->
+  <app-confirmation-dialog
+    [isOpen]="showConfirmationDialog"
+    [title]="confirmationDialogTitle"
+    [message]="confirmationDialogMessage"
+    [contextInfo]="confirmationDialogContext"
+    (confirm)="handleConfirm()"
+    (cancel)="closeConfirmationDialog()">
+  </app-confirmation-dialog>
+</div>

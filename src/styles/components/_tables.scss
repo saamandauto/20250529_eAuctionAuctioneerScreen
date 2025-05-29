@@ -1,0 +1,30 @@
+/* Table styles */
+.history-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.history-table th {
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 2px solid #dee2e6;
+  color: #495057;
+  font-size: 0.85rem;
+}
+
+.history-table td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid #dee2e6;
+  font-size: 0.85rem;
+}
+
+.empty-row td {
+  padding: 0.75rem;
+  border: none;
+  background: white;
+}
+
+.history-table tr:last-child td {
+  border-bottom: none;
+}

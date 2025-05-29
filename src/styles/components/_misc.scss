@@ -1,0 +1,27 @@
+/* Miscellaneous component styles */
+.show-more {
+  text-align: center;
+  padding: 0.25rem;
+  color: #666;
+  cursor: pointer;
+  transition: color 0.2s;
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+}
+
+.show-more:hover {
+  color: #333;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.clickable:hover {
+  background-color: #f8f9fa;
+}
+
+.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

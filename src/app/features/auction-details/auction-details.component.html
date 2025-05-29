@@ -1,0 +1,12 @@
+<div class="auction-details-feature">
+  <app-auction-details
+    [soldLots]="soldLots"
+    [withdrawnLots]="withdrawnLots"
+    [totalBids]="totalBids"
+    [auctioneerBids]="auctioneerBids"
+    [dealerBids]="dealerBids"
+    [totalSoldValue]="totalSoldValue"
+    [totalReserveValue]="totalReserveValue"
+    [performance]="(performance$ | async) || { sum: '-', percentage: '-' }">
+  </app-auction-details>
+</div>

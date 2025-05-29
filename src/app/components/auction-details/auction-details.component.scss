@@ -1,0 +1,45 @@
+.negative {
+  color: #dc3545;
+}
+
+.positive {
+  color: #28a745;
+}
+
+.panel {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.panel h4 {
+  font-size: 1.4rem;
+  margin: -0.5rem 0 1rem;
+  color: #333;
+  font-weight: 600;
+}
+
+.auction-details {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.status-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #eee;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  span:first-child {
+    color: #666;
+  }
+
+  span:last-child {
+    font-weight: 500;
+  }
+}

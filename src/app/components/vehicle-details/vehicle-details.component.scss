@@ -1,0 +1,96 @@
+.vehicle-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+}
+
+.detail-value {
+  padding: 0.4rem 0.75rem;
+  background: #f8f9fa;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  color: #212529;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: help;
+}
+
+.vehicle-stats {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  padding-top: 0.4rem;
+  margin-top: 0.25rem;
+  border-top: 1px solid #dee2e6;
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 6px;
+  transition: background-color 0.2s;
+}
+
+.stat-item:hover {
+  background-color: #f1f3f5;
+}
+
+.stat-item i {
+  font-size: 1.1rem;
+  color: #495057;
+}
+
+.stat-item span {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #212529;
+}
+
+.see-all-details {
+  color: #ff5722;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-align: center;
+  padding: 0.15rem;
+  margin-top: -0.15rem;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 1440px) and (min-width: 1024px) {
+  .detail-value {
+    padding: 0.35rem 0.5rem;
+    font-size: 0.85rem;
+  }
+  
+  .stat-item i {
+    font-size: 1rem;
+  }
+  
+  .stat-item span {
+    font-size: 0.85rem;
+  }
+}
+
+/* Remove custom tooltip styling - keep only native browser tooltips */
+[title] {
+  position: relative;
+}

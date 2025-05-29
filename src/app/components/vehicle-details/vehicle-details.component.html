@@ -1,0 +1,47 @@
+<div class="vehicle-details">
+  <div class="detail-grid">
+    <div class="detail-value" [title]="'Year: ' + lot?.year">
+      {{ lot?.year }}
+    </div>
+    <div class="detail-value" [title]="'Model: ' + lot?.model">
+      {{ lot?.model }}
+    </div>
+    <div class="detail-value" [title]="'Transmission: ' + lot?.transmission">
+      {{ lot?.transmission }}
+    </div>
+    <div class="detail-value" [title]="'Fuel: ' + lot?.fuel">
+      {{ lot?.fuel }}
+    </div>
+    <div class="detail-value" [title]="'Color: ' + lot?.color">
+      {{ lot?.color }}
+    </div>
+    <div class="detail-value" [title]="'Mileage: ' + lot?.mileage + ' km'">
+      {{ lot?.mileage }} km
+    </div>
+    <div class="detail-value" [title]="'Location: ' + lot?.location">
+      {{ lot?.location }}
+    </div>
+    <div class="detail-value" [title]="'Registration: ' + lot?.registration">
+      {{ lot?.registration }}
+    </div>
+  </div>
+  <div class="vehicle-stats">
+    <div class="stat-item" (click)="openViewersDialog()" [title]="'Viewers: Dealers who have viewed the detail page of this lot'">
+      <i class="ri-eye-line"></i>
+      <span>{{ lot?.viewers }}</span>
+    </div>
+    <div class="stat-item" (click)="openWatchersDialog()" [title]="'Watchers: Dealers who have marked this lot as a favorite'">
+      <i class="ri-star-line"></i>
+      <span>{{ lot?.watchers }}</span>
+    </div>
+    <div class="stat-item" (click)="openLeadsDialog()" [title]="'Leads: Dealers who have expressed interest in this lot and are on the lead list'">
+      <i class="ri-list-check-2"></i>
+      <span>{{ lot?.leadListUsers }}</span>
+    </div>
+    <div class="stat-item" (click)="onOnlineClick()" [title]="'Online Users: Dealers who are currently online and viewing this lot'">
+      <i class="ri-user-line"></i>
+      <span>{{ lot?.onlineUsers }}</span>
+    </div>
+  </div>
+  <a href="#" class="see-all-details">See all vehicle details</a>
+</div>

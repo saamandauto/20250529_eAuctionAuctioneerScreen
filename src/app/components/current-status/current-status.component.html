@@ -1,0 +1,45 @@
+<div class="sub-panel">
+  <h4>Current Status</h4>
+  <div class="price-summary">
+    <div class="price-item">
+      <label>Highest Bid</label>
+      <span class="price" [class.above-reserve]="isAboveReserve">
+        {{ currentHighestBid ? '£' + currentHighestBid : '-' }}
+      </span>
+    </div>
+    <div class="price-item">
+      <label>Asking Price</label>
+      <span class="price">
+        £{{ askingPrice }}
+      </span>
+    </div>
+  </div>
+  <div class="current-status">
+    <div class="status-row">
+      <span>Start Price:</span>
+      <span>£{{ startPrice }}</span>
+    </div>
+    <div class="status-row">
+      <span>Reserve Price:</span>
+      <span>£{{ lot?.reservePrice }}</span>
+    </div>
+    <div class="status-row">
+      <span>Lot Performance:</span>
+      <span [class.negative]="lotPerformance.value < 0"
+            [class.positive]="lotPerformance.value > 0">
+        {{ lotPerformance.text }}
+      </span>
+    </div>
+    <div class="status-row">
+      <span>Last Auction:</span>
+      <span>{{ lot?.lastAuctionBid ? ('£' + lot?.lastAuctionBid?.toLocaleString()) : '-' }}</span>
+    </div>
+    <div class="status-row">
+      <span>Indicata Market Price:</span>
+      <span>{{ lot?.indicataMarketPrice ? ('£' + lot?.indicataMarketPrice?.toLocaleString()) : '-' }}</span>
+    </div>
+  </div>
+  <div class="buyer-fee-info">
+    Buyer fee: £0 - Car Vat qualifying
+  </div>
+</div>

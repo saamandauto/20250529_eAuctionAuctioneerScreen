@@ -1,0 +1,20 @@
+.vehicle-details-feature {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.sub-panel {
+  background: #f8f9fa;
+  padding: 1.25rem;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+  min-width: 0;
+
+  h4 {
+    font-size: 1.2rem;
+    margin: -0.2rem 0 0.5rem;
+    color: #333;
+    font-weight: 600;
+  }
+}

@@ -1,0 +1,68 @@
+<div class="panel messages-panel">
+  <div class="panel-header">
+    <h3>Messages {{ selectedDealer ? '- ' + selectedDealer.name : '' }}</h3>
+    <span class="message-count">{{ filteredMessages.length }} messages</span>
+  </div>
+
+  <div class="message-controls">
+    <div class="filter-tabs">
+      <button class="tab-button" 
+              [class.active]="!selectedDealer && !showGlobalMessages"
+              (click)="clearSelectedDealer()">
+        All Messages
+      </button>
+      <button class="tab-button" 
+              [class.active]="!selectedDealer && showGlobalMessages"
+              (click)="toggleGlobalMessages()">
+        Announcements
+      </button>
+    </div>
+    
+    <!-- Show dealer tab separately for better visibility -->
+    <div class="dealer-tab" *ngIf="selectedDealer">
+      <span class="dealer-name">{{ selectedDealer.name }}</span>
+      <button class="close-button" (click)="$event.stopPropagation(); clearSelectedDealer()">
+        <i class="ri-close-line"></i>
+      </button>
+    </div>
+  </div>
+
+  <div class="messages-container">
+    <div class="messages-list">
+      <div *ngFor="let message of filteredMessages" 
+           class="message-bubble" 
+           [class.alternate]="message.alternate"
+           [class.global]="message.isGlobal"
+           [class.unread]="!message.isRead"
+           (click)="onMessageClick(message)">
+        <div class="message-header" *ngIf="!message.alternate">
+          <span class="dealer-name">{{ message.dealer }}</span>
+          <span class="message-time">{{ message.time }}</span>
+        </div>
+        <div class="message-content">{{ message.text }}</div>
+        <div class="message-footer" *ngIf="message.alternate">
+          <span class="message-time">{{ message.time }}</span>
+          <span class="message-status">
+            {{ message.isGlobal ? 'Sent to all' : 'Sent' }}
+          </span>
+        </div>
+      </div>
+      
+      <div class="empty-state" *ngIf="filteredMessages.length === 0">
+        <i class="ri-chat-3-line"></i>
+        <p>No messages to display</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="message-input-container">
+    <input type="text" 
+           [(ngModel)]="newMessage"
+           [placeholder]="getMessagePlaceholder()"
+           class="message-input"
+           (keyup.enter)="onSendMessage()">
+    <button class="button button-primary" (click)="onSendMessage()">
+      <i class="ri-send-plane-fill"></i>
+    </button>
+  </div>
+</div>

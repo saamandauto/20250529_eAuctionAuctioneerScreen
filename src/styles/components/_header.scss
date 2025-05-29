@@ -1,0 +1,148 @@
+/* Header styles */
+.header {
+  background-color: white;
+  padding: 1rem 2rem;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.header .title {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.header .title h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.header .auction-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: #eee;
+  font-size: 0.9rem;
+}
+
+.header .auction-info .separator {
+  color: #ccc;
+}
+
+.header .actions {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.header .actions span {
+  color: #666;
+  padding-right: 1rem;
+}
+
+.toggle-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.toggle-label {
+  font-size: 0.9rem;
+  color: #495057;
+}
+
+.toggle {
+  position: relative;
+  display: inline-block;
+  width: 48px;
+  height: 24px;
+}
+
+.toggle input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 24px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #ff5722;
+}
+
+input:checked + .slider:before {
+  transform: translateX(24px);
+}
+
+/* Speech button specific styles */
+.speech-button {
+  position: relative;
+  padding-right: 2.5rem;
+  transition: all 0.3s ease;
+  overflow: visible;
+}
+
+.speech-button.speech-active {
+  animation: pulse 1.5s infinite;
+  background-color: #4CAF50 !important;
+  color: white;
+  box-shadow: 0 0 15px rgba(76, 175, 80, 0.5);
+}
+
+.key-indicator {
+  position: absolute;
+  right: 0.4rem;
+  font-size: 0.7rem;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 0.1rem 0.3rem;
+  border-radius: 3px;
+  font-weight: bold;
+  color: white;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(76, 175, 80, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(76, 175, 80, 0);
+  }
+}
+
+.speech-button.button-voice-on i {
+  animation: flash 2s infinite;
+}
+
+@keyframes flash {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}

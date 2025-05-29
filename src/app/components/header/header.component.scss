@@ -1,0 +1,371 @@
+.header {
+  background: linear-gradient(to bottom, #ff6e40, #ff5722);
+  padding: 0.75rem 1rem;
+  color: white;
+  box-shadow: 
+    0 2px 4px rgba(0,0,0,0.1),
+    inset 0 1px rgba(255,255,255,0.15);
+  position: relative;
+  z-index: 10;
+  max-height: 80px;
+  overflow: hidden;
+}
+
+.header-content {
+  max-width: 1800px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-width: 0;
+}
+
+.logo {
+  height: 36px; /* Reduced to 75% of original 48px */
+  width: auto;
+  margin: -4px 0;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.1));
+  display: block;
+  flex-shrink: 0;
+}
+
+.title-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.title-group h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.auction-id {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  font-weight: normal;
+}
+
+.version {
+  font-size: 0.9rem;
+  opacity: 0.8;
+  font-weight: 400;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 0.1rem 0.4rem;
+  border-radius: 12px;
+  color: white;
+  text-shadow: none;
+}
+
+.auction-date {
+  opacity: 0.9;
+  font-weight: normal;
+}
+
+.auction-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1rem;
+  opacity: 0.95;
+  text-shadow: 0 1px 1px rgba(0,0,0,0.1);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.separator {
+  opacity: 0.5;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
+
+.current-time {
+  font-size: 0.95rem;
+  font-weight: 500;
+  padding: 0.4rem 0.75rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  height: 34px;
+  padding: 0 1rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 500;
+  background: rgba(255, 255, 255, 0.95);
+  color: #ff5722;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+
+  &:hover:not(:disabled) {
+    background: white;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  i {
+    font-size: 1.1rem;
+  }
+}
+
+.button-primary {
+  background: #d84315;
+  color: white;
+  box-shadow: 
+    0 1px 2px rgba(0,0,0,0.1),
+    inset 0 1px rgba(255,255,255,0.1);
+
+  &:hover:not(:disabled) {
+    background: #bf360c;
+  }
+}
+
+.button-start {
+  background: #4CAF50;
+  color: white;
+  box-shadow: 
+    0 1px 2px rgba(0,0,0,0.1),
+    inset 0 1px rgba(255,255,255,0.1);
+
+  &:hover:not(:disabled) {
+    background: #388E3C;
+  }
+}
+
+.button-view {
+  background: #2196F3;
+  color: white;
+  box-shadow: 
+    0 1px 2px rgba(0,0,0,0.1),
+    inset 0 1px rgba(255,255,255,0.1);
+
+  &:hover:not(:disabled) {
+    background: #1976D2;
+  }
+}
+
+.voice-button-container {
+  position: relative;
+}
+
+.button-voice-on {
+  background: #4CAF50;
+  color: white;
+  box-shadow: 
+    0 1px 2px rgba(0,0,0,0.1),
+    inset 0 1px rgba(255,255,255,0.1);
+
+  &:hover:not(:disabled) {
+    background: #388E3C;
+  }
+}
+
+.button-voice-off {
+  background: #f5f5f5;
+  color: #555;
+  box-shadow: 
+    0 1px 2px rgba(0,0,0,0.1),
+    inset 0 1px rgba(255,255,255,0.1);
+
+  &:hover:not(:disabled) {
+    background: #e0e0e0;
+  }
+}
+
+.button-voice-error {
+  background: #f44336;
+  color: white;
+  box-shadow: 
+    0 1px 2px rgba(0,0,0,0.1),
+    inset 0 1px rgba(255,255,255,0.1);
+
+  &:hover:not(:disabled) {
+    background: #d32f2f;
+  }
+}
+
+.error-badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background-color: #f44336;
+  color: white;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.button-icon {
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+
+  &:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.1);
+    transform: none;
+    box-shadow: none;
+  }
+
+  i {
+    font-size: 1.2rem;
+  }
+}
+
+/* Speech button specific styles */
+.speech-button {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.speech-button.speech-active {
+  animation: pulse 1.5s infinite;
+  background-color: #4CAF50 !important;
+  color: white;
+  box-shadow: 0 0 15px rgba(76, 175, 80, 0.5);
+}
+
+.shortcut-hint {
+  display: inline-block;
+  font-size: 0.75rem;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 0.1rem 0.3rem;
+  border-radius: 3px;
+  margin-left: 0.25rem;
+  font-weight: bold;
+}
+
+.mic-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+}
+
+.mic-icon {
+  position: relative;
+  z-index: 2;
+  font-size: 1.1rem;
+}
+
+.sound-wave {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.wave-bar {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.7);
+  width: 2px;
+  border-radius: 50px;
+  animation: sound-wave 1.3s infinite ease-in-out;
+  transform-origin: center;
+}
+
+.wave-bar:nth-child(1) {
+  height: 8px;
+  animation-delay: 0s;
+  transform: rotate(0deg) translateY(-12px);
+}
+
+.wave-bar:nth-child(2) {
+  height: 10px;
+  animation-delay: 0.3s;
+  transform: rotate(90deg) translateY(-12px);
+}
+
+.wave-bar:nth-child(3) {
+  height: 8px;
+  animation-delay: 0.6s;
+  transform: rotate(180deg) translateY(-12px);
+}
+
+.wave-bar:nth-child(4) {
+  height: 10px;
+  animation-delay: 0.9s;
+  transform: rotate(270deg) translateY(-12px);
+}
+
+@keyframes sound-wave {
+  0%, 100% {
+    height: 8px;
+    opacity: 0.5;
+  }
+  50% {
+    height: 14px;
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 6px rgba(76, 175, 80, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(76, 175, 80, 0);
+  }
+}
+
+.speech-button.button-voice-on i {
+  animation: flash 2s infinite;
+}
+
+@keyframes flash {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}

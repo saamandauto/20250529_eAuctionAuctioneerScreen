@@ -1,0 +1,180 @@
+/* Grid and layout styles */
+.main-content {
+  padding: 1.5rem;
+  max-width: 1800px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 2.3fr) minmax(0, 2.3fr) minmax(0, 2.3fr);
+  gap: 1.5rem;
+}
+
+.left-column {
+  grid-column: 1;
+}
+
+.middle-column {
+  grid-column: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.right-panels {
+  grid-column: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.lots-column {
+  grid-column: 4;
+}
+
+.panels-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+/* Maintain all columns between 1024px and 1440px */
+@media (max-width: 1440px) and (min-width: 1024px) {
+  .main-content {
+    grid-template-columns: minmax(0, 4fr) minmax(0, 2fr) minmax(0, 2fr) minmax(0, 2fr);
+    gap: 1rem;
+  }
+  
+  /* Ensure sub-panels don't overflow their containers */
+  .panels-grid {
+    gap: 0.5rem;
+  }
+  
+  .sub-panel {
+    padding: 1rem;
+  }
+  
+  /* Reduce font sizes slightly to help fit content */
+  .panel h4, 
+  .sub-panel h4 {
+    font-size: 1.1rem;
+  }
+}
+
+/* Four column layout for tablet-sized screens (769px-1024px) */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .main-content {
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr) minmax(0, 2fr) minmax(0, 2fr);
+    gap: 0.75rem;
+    padding: 1rem;
+  }
+
+  .left-column {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .middle-column {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .right-panels {
+    grid-column: 3;
+    grid-row: 1;
+  }
+
+  .lots-column {
+    grid-column: 4;
+    grid-row: 1;
+  }
+  
+  /* Make the panels-grid maintain a 2-column layout even on smaller screens */
+  .panels-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: 100%;
+    margin: 0.75rem auto 0;
+    gap: 0.5rem;
+  }
+  
+  /* Ensure each panel has proper width and doesn't flow outside its container */
+  .sub-panel, .panel {
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+    padding: 0.75rem;
+  }
+  
+  /* Reduce spacing in panels for better fit */
+  .panel h4, .sub-panel h4 {
+    font-size: 1rem;
+    margin: 0 0 0.5rem 0;
+  }
+
+  .history-panel, .panel {
+    padding: 1rem;
+  }
+  
+  .panel-header {
+    margin: -0.25rem 0 0.5rem;
+  }
+  
+  .panel-header h3 {
+    font-size: 1.2rem;
+  }
+}
+
+/* Two column layout for tablet-sized screens */
+@media (max-width: 768px) and (min-width: 581px) {
+  .main-content {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 1rem;
+  }
+
+  .left-column {
+    grid-column: span 2;
+    grid-row: 1;
+  }
+
+  .middle-column {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .right-panels {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  .lots-column {
+    grid-column: span 2;
+    grid-row: 3;
+  }
+  
+  /* Keep 2-column layout for panels on tablets */
+  .panels-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Single column for mobile */
+@media (max-width: 580px) {
+  .main-content {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .left-column,
+  .middle-column,
+  .right-panels,
+  .lots-column {
+    grid-column: 1;
+  }
+
+  .panels-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .vehicle-details {
+    grid-template-columns: 1fr;
+  }
+}

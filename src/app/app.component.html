@@ -1,0 +1,174 @@
+<div class="app-container">
+  <!-- Header -->
+  <app-header
+    [auctionTitle]="auctionState.getValue('auctionTitle')"
+    [currentDateTime]="(auctionState.select('currentDateTime') | async) ?? ''"
+    [isAuctionStarted]="(auctionState.select('isAuctionStarted') | async) ?? false"
+    [isViewingLots]="(auctionState.select('isViewingLots') | async) ?? true"
+    [simulatedBiddingEnabled]="auctionState.getValue('simulatedBiddingEnabled')"
+    (startAuction)="startAuction()"
+    (endAuction)="endAuction()"
+    (toggleView)="toggleView()"
+    (toggleSimulatedBidding)="toggleSimulatedBidding()"
+    (openSettings)="toggleSettingsPanel()">
+  </app-header>
+
+  <!-- Landing Page or Planned Lots View during auction -->
+  <div class="landing-content" *ngIf="!(auctionState.select('isAuctionStarted') | async) || ((auctionState.select('isAuctionStarted') | async) && (auctionState.select('isViewingLots') | async))">
+    <app-planned-lots 
+      [lots]="(auctionState.select('lots') | async) ?? []" 
+      (lotUpdated)="onLotUpdated($event)"
+      (lotsReordered)="onLotsReordered($event)">
+    </app-planned-lots>
+  </div>
+
+  <!-- Auction Content - Show when auction is started and not viewing lots -->
+  <div class="main-content" *ngIf="(auctionState.select('isAuctionStarted') | async) && !(auctionState.select('isViewingLots') | async)">
+    <div class="left-column">
+      <div class="panel">
+        <div class="lot-header">
+          <div class="lot-info compact">
+            <h2>Lot No. {{ (auctionState.select('currentLot') | async)?.lotNumber }} - {{ (auctionState.select('currentLot') | async)?.make }} {{ (auctionState.select('currentLot') | async)?.model }}</h2>
+          </div>
+          <div class="lot-status" [class]="(auctionState.select('lotStatus') | async)?.toLowerCase()">
+            {{ auctionState.select('lotStatus') | async }}
+          </div>
+        </div>
+
+        <div class="panels-grid">
+          <app-vehicle-details-feature
+            [lot]="auctionState.select('currentLot') | async"
+            (viewersClick)="openViewersDialog()"
+            (watchersClick)="openWatchersDialog()"
+            (leadsClick)="openLeadsDialog()"
+            (onlineClick)="openOnlineDialog()">
+          </app-vehicle-details-feature>
+
+          <app-lot-control
+            [lotStatus]="(auctionState.select('lotStatus') | async) ?? LotStatus.PENDING"
+            [hammerState]="(auctionState.select('hammerState') | async) ?? HammerState.ACCEPTING_BIDS"
+            [canControlLot]="(auctionState.select('canControlLot') | async) ?? false"
+            [canUseHammer]="(auctionState.select('canUseHammer') | async) ?? false"
+            [hasBids]="((auctionState.select('bids') | async)?.length ?? 0) > 0"
+            [skipConfirmations]="auctionState.getValue('skipConfirmations')"
+            [currentLot]="auctionState.select('currentLot') | async"
+            [currentHighestBid]="auctionState.select('currentHighestBid') | async"
+            [highestBid]="auctionState.select('highestBid') | async"
+            (startLot)="startLot()"
+            (moveLot)="moveLot()"
+            (noSale)="noSale()"
+            (withdrawLot)="withdrawLot()"
+            (markAsSold)="markAsSold()"
+            (progressHammerState)="progressHammerState()">
+          </app-lot-control>
+
+          <app-current-status
+            [lot]="auctionState.select('currentLot') | async"
+            [currentHighestBid]="auctionState.select('currentHighestBid') | async"
+            [askingPrice]="(auctionState.select('askingPrice') | async) ?? 0"
+            [startPrice]="(auctionState.select('startPrice') | async) ?? 0"
+            [lotPerformance]="getLotPerformance()">
+          </app-current-status>
+
+          <app-bidding
+            [canControlLot]="(auctionState.select('canControlLot') | async) ?? false"
+            [startPrice]="(auctionState.select('startPrice') | async) ?? 0"
+            [currentHighestBid]="auctionState.select('currentHighestBid') | async"
+            [askingPrice]="(auctionState.select('askingPrice') | async) ?? 0"
+            [bidIncrement]="(auctionState.select('bidIncrement') | async) ?? 0"
+            [newBidAmount]="(auctionState.select('newBidAmount') | async) ?? 0"
+            [lotStatus]="(auctionState.select('lotStatus') | async) ?? LotStatus.PENDING"
+            [currentLot]="auctionState.select('currentLot') | async"
+            [dealers]="(auctionState.select('dealers') | async) ?? []"
+            [bids]="(auctionState.select('bids') | async) ?? []"
+            [simulatedBiddingEnabled]="auctionState.getValue('simulatedBiddingEnabled')"
+            (bidPlaced)="onBidPlaced($event)"
+            (askingPriceChanged)="setAskingPrice($event)"
+            (bidIncrementChanged)="adjustBidIncrement($event)"
+            (auctioneerBidCountChanged)="onAuctioneerBidCountChanged()">
+          </app-bidding>
+        </div>
+      </div>
+    </div>
+
+    <div class="middle-column">
+      <app-bid-history [bids]="(auctionState.select('bids') | async) ?? []"></app-bid-history>
+      <app-dealers-list 
+        [dealers]="(auctionState.select('dealers') | async) ?? []"
+        [messages]="(auctionState.select('messages') | async) ?? []"
+        [selectedDealer]="auctionState.select('selectedDealer') | async"
+        (selectDealer)="onDealerSelect($event)">
+      </app-dealers-list>
+    </div>
+
+    <div class="right-panels">
+      <app-auction-details-feature
+        [soldLots]="(auctionState.select('soldLots') | async) ?? 0"
+        [withdrawnLots]="(auctionState.select('withdrawnLots') | async) ?? 0"
+        [totalBids]="((auctionState.select('bids') | async)?.length ?? 0)"
+        [auctioneerBids]="(auctionState.select('auctioneerBidsCount') | async) ?? 0"
+        [dealerBids]="(auctionState.select('dealerBidsCount') | async) ?? 0" 
+        [totalSoldValue]="(auctionState.select('totalSoldValue') | async) ?? 0"
+        [totalReserveValue]="(auctionState.select('totalReserveValue') | async) ?? 0">
+      </app-auction-details-feature>
+      <app-messaging 
+        [dealers]="(auctionState.select('dealers') | async) ?? []"
+        [messages]="(auctionState.select('messages') | async) ?? []"
+        [selectedDealer]="auctionState.select('selectedDealer') | async"
+        (sendMessage)="onSendMessage($event)"
+        (selectDealer)="onDealerSelect($event)">
+      </app-messaging>
+    </div>
+
+    <div class="lots-column">
+      <app-lots-list 
+        [lots]="(auctionState.select('lots') | async) ?? []"
+        [currentLotStatus]="(auctionState.select('lotStatus') | async) ?? LotStatus.PENDING"
+        (selectLot)="selectLot($event)">
+      </app-lots-list>
+    </div>
+  </div>
+
+  <!-- Settings Panel -->
+  <app-settings-panel
+    [isOpen]="isSettingsPanelOpen"
+    (close)="closeSettingsPanel()">
+  </app-settings-panel>
+
+  <!-- User List Dialogs -->
+  <app-user-list-dialog
+    [isOpen]="(auctionState.select('isViewersDialogOpen') | async) ?? false"
+    [users]="(auctionState.select('viewers') | async) ?? []"
+    [type]="'Viewer'"
+    [title]="'Current Viewers'"
+    [description]="'A viewer is a dealer who has viewed the detail page of this lot.'"
+    (close)="closeViewersDialog()">
+  </app-user-list-dialog>
+
+  <app-user-list-dialog
+    [isOpen]="(auctionState.select('isWatchersDialogOpen') | async) ?? false"
+    [users]="(auctionState.select('watchers') | async) ?? []"
+    [type]="'Watcher'"
+    [title]="'Watchers'"
+    [description]="'A watcher is a dealer who has marked this lot as a favorite.'"
+    (close)="closeWatchersDialog()">
+  </app-user-list-dialog>
+
+  <app-user-list-dialog
+    [isOpen]="(auctionState.select('isLeadsDialogOpen') | async) ?? false"
+    [users]="(auctionState.select('leads') | async) ?? []"
+    [type]="'Lead'"
+    [title]="'Leads'"
+    [description]="'A lead is a dealer who has expressed interest in this lot and is on the lead list.'"
+    (close)="closeLeadsDialog()">
+  </app-user-list-dialog>
+
+  <app-user-list-dialog
+    [isOpen]="(auctionState.select('isOnlineDialogOpen') | async) ?? false"
+    [users]="(auctionState.select('onlineUsers') | async) ?? []"
+    [type]="'Online'"
+    [title]="'Online Users'"
+    [description]="'These dealers are currently online and viewing this lot.'"
+    (close)="closeOnlineDialog()">
+  </app-user-list-dialog>
+</div>

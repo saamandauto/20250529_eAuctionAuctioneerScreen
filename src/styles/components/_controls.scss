@@ -1,0 +1,133 @@
+/* Control components styles */
+.lot-controls {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.control-buttons {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+}
+
+.control-buttons.three-buttons {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.bid-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.bid-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.bid-input-group label {
+  font-size: 0.9rem;
+  color: #495057;
+  font-weight: 500;
+}
+
+.input-with-button {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.input-with-button input {
+  flex: 1;
+  padding: 0.75rem;
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 0.9rem;
+}
+
+.bid-increment-group {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.bid-increment-group label {
+  font-size: 0.9rem;
+  color: #495057;
+  font-weight: 500;
+  margin: 0;
+}
+
+.increment-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: transparent;
+  padding: 0;
+  border: none;
+}
+
+.increment-controls .button-icon {
+  background-color: #ff5722;
+  color: white;
+  border: none;
+}
+
+.increment-controls .button-icon:hover {
+  background-color: #f4511e;
+  color: white;
+}
+
+.increment-controls span {
+  min-width: 80px;
+  text-align: center;
+}
+
+.quick-bid-controls {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+}
+
+.timer {
+  color: #ff5722;
+  font-weight: bold;
+  font-size: 1.2rem;
+  text-align: center;
+  padding: 0.75rem;
+  background: #fff3ef;
+  border-radius: 6px;
+  min-height: 3.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1440px) and (min-width: 1024px) {
+  .input-with-button input {
+    padding: 0.6rem;
+  }
+  
+  .increment-controls span {
+    min-width: 60px;
+    font-size: 0.9rem;
+  }
+  
+  .timer {
+    font-size: 1.1rem;
+    padding: 0.6rem;
+    min-height: 3rem;
+  }
+}
+
+/* Ensure button text doesn't break on small screens */
+@media (max-width: 1280px) {
+  .button {
+    white-space: nowrap;
+    padding: 0.5rem 0.5rem;
+    font-size: 0.85rem;
+  }
+}

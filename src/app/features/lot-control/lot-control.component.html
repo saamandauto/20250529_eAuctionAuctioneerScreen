@@ -1,0 +1,19 @@
+<div class="lot-control-container">
+  <app-lot-controls
+    [lotStatus]="lotStatus"
+    [hammerState]="hammerState"
+    [canControlLot]="canControlLot"
+    [canUseHammer]="canUseHammer"
+    [hasBids]="hasBids"
+    [skipConfirmations]="skipConfirmations"
+    [currentLot]="currentLot"
+    [currentHighestBid]="currentHighestBid"
+    [highestBid]="highestBid"
+    (startLot)="onStartLot()"
+    (moveLot)="onMoveLot()"
+    (noSale)="onNoSale()"
+    (withdrawLot)="onWithdrawLot()"
+    (markAsSold)="onMarkAsSold()"
+    (progressHammerState)="onProgressHammerState()">
+  </app-lot-controls>
+</div>

@@ -1,0 +1,263 @@
+<div class="planned-lots-panel">
+  <div class="panel-header">
+    <h2>Planned Lots</h2>
+    <div class="view-controls">
+      <button 
+        class="view-toggle-button" 
+        (click)="toggleDragMode()" 
+        [class.active]="isDragEnabled"
+        title="Toggle reordering mode">
+        <i class="ri-drag-move-line"></i>
+        {{ isDragEnabled ? 'Disable Reordering' : 'Reorder Lots' }}
+      </button>
+      <button 
+        class="view-toggle-button" 
+        (click)="toggleViewMode()" 
+        title="{{ viewMode === 'compact' ? 'Show all columns' : 'Show essential columns only' }}"
+        *ngIf="isToggleVisible">
+        <i [class]="viewMode === 'compact' ? 'ri-menu-line' : 'ri-menu-fold-line'"></i>
+        {{ viewMode === 'compact' ? 'Detailed View' : 'Compact View' }}
+      </button>
+      <span class="lot-count">{{ lots.length }} lots</span>
+    </div>
+  </div>
+  
+  <div class="table-container">
+    <table class="lots-table" 
+           [class.compact-view]="viewMode === 'compact'" 
+           [class.detailed-view]="viewMode === 'detailed'"
+           [class.reorder-mode]="isDragEnabled"
+           cdkDropList
+           (cdkDropListDropped)="onDrop($event)">
+      <thead>
+        <tr>
+          <th *ngIf="isDragEnabled" class="drag-header">Reorder</th>
+          <th (click)="sort('lotNumber')" class="sortable-header" [class.disabled-sort]="isDragEnabled">
+            Lot No.
+            <span class="sort-icon" *ngIf="sortColumn === 'lotNumber' && !isDragEnabled">
+              <i [class.ri-arrow-up-s-line]="sortDirection === 'asc'" 
+                 [class.ri-arrow-down-s-line]="sortDirection === 'desc'"></i>
+            </span>
+          </th>
+          <th (click)="sort('make')" class="sortable-header" [class.disabled-sort]="isDragEnabled">
+            Vehicle
+            <span class="sort-icon" *ngIf="sortColumn === 'make' && !isDragEnabled">
+              <i [class.ri-arrow-up-s-line]="sortDirection === 'asc'" 
+                 [class.ri-arrow-down-s-line]="sortDirection === 'desc'"></i>
+            </span>
+          </th>
+          <th (click)="sort('year')" class="sortable-header" [class.disabled-sort]="isDragEnabled">
+            Year
+            <span class="sort-icon" *ngIf="sortColumn === 'year' && !isDragEnabled">
+              <i [class.ri-arrow-up-s-line]="sortDirection === 'asc'" 
+                 [class.ri-arrow-down-s-line]="sortDirection === 'desc'"></i>
+            </span>
+          </th>
+          <th (click)="sort('transmission')" class="sortable-header toggle-column" [class.disabled-sort]="isDragEnabled">
+            Transmission
+            <span class="sort-icon" *ngIf="sortColumn === 'transmission' && !isDragEnabled">
+              <i [class.ri-arrow-up-s-line]="sortDirection === 'asc'" 
+                 [class.ri-arrow-down-s-line]="sortDirection === 'desc'"></i>
+            </span>
+          </th>
+          <th (click)="sort('fuel')" class="sortable-header toggle-column" [class.disabled-sort]="isDragEnabled">
+            Fuel
+            <span class="sort-icon" *ngIf="sortColumn === 'fuel' && !isDragEnabled">
+              <i [class.ri-arrow-up-s-line]="sortDirection === 'asc'" 
+                 [class.ri-arrow-down-s-line]="sortDirection === 'desc'"></i>
+            </span>
+          </th>
+          <th (click)="sort('color')" class="sortable-header toggle-column" [class.disabled-sort]="isDragEnabled">
+            Color
+            <span class="sort-icon" *ngIf="sortColumn === 'color' && !isDragEnabled">
+              <i [class.ri-arrow-up-s-line]="sortDirection === 'asc'" 
+                 [class.ri-arrow-down-s-line]="sortDirection === 'desc'"></i>
+            </span>
+          </th>
+          <th (click)="sort('mileage')" class="sortable-header toggle-column" [class.disabled-sort]="isDragEnabled">
+            Mileage
+            <span class="sort-icon" *ngIf="sortColumn === 'mileage' && !isDragEnabled">
+              <i [class.ri-arrow-up-s-line]="sortDirection === 'asc'" 
+                 [class.ri-arrow-down-s-line]="sortDirection === 'desc'"></i>
+            </span>
+          </th>
+          <th (click)="sort('location')" class="sortable-header toggle-column" [class.disabled-sort]="isDragEnabled">
+            Location
+            <span class="sort-icon" *ngIf="sortColumn === 'location' && !isDragEnabled">
+              <i [class.ri-arrow-up-s-line]="sortDirection === 'asc'" 
+                 [class.ri-arrow-down-s-line]="sortDirection === 'desc'"></i>
+            </span>
+          </th>
+          <th (click)="sort('registration')" class="sortable-header toggle-column" [class.disabled-sort]="isDragEnabled">
+            Registration
+            <span class="sort-icon" *ngIf="sortColumn === 'registration' && !isDragEnabled">
+              <i [class.ri-arrow-up-s-line]="sortDirection === 'asc'" 
+                 [class.ri-arrow-down-s-line]="sortDirection === 'desc'"></i>
+            </span>
+          </th>
+          <th (click)="sort('reservePrice')" class="sortable-header" [class.disabled-sort]="isDragEnabled">
+            Reserve Price
+            <span class="sort-icon" *ngIf="sortColumn === 'reservePrice' && !isDragEnabled">
+              <i [class.ri-arrow-up-s-line]="sortDirection === 'asc'" 
+                 [class.ri-arrow-down-s-line]="sortDirection === 'desc'"></i>
+            </span>
+          </th>
+          <th (click)="sort('initialAskingPrice')" class="sortable-header" [class.disabled-sort]="isDragEnabled">
+            Asking Price
+            <span class="sort-icon" *ngIf="sortColumn === 'initialAskingPrice' && !isDragEnabled">
+              <i [class.ri-arrow-up-s-line]="sortDirection === 'asc'" 
+                 [class.ri-arrow-down-s-line]="sortDirection === 'desc'"></i>
+            </span>
+          </th>
+          <th (click)="sort('lastAuctionBid')" class="sortable-header" [class.disabled-sort]="isDragEnabled">
+            Last Auction
+            <span class="sort-icon" *ngIf="sortColumn === 'lastAuctionBid' && !isDragEnabled">
+              <i [class.ri-arrow-up-s-line]="sortDirection === 'asc'" 
+                 [class.ri-arrow-down-s-line]="sortDirection === 'desc'"></i>
+            </span>
+          </th>
+          <th (click)="sort('indicataMarketPrice')" class="sortable-header" [class.disabled-sort]="isDragEnabled">
+            Indicata Price
+            <span class="sort-icon" *ngIf="sortColumn === 'indicataMarketPrice' && !isDragEnabled">
+              <i [class.ri-arrow-up-s-line]="sortDirection === 'asc'" 
+                 [class.ri-arrow-down-s-line]="sortDirection === 'desc'"></i>
+            </span>
+          </th>
+          <th>Dealer Activity</th>
+        </tr>
+      </thead>
+      <tbody cdkDropList (cdkDropListDropped)="onDrop($event)">
+        <tr *ngFor="let lot of sortedLots" 
+            cdkDrag
+            [cdkDragDisabled]="!isDragEnabled"
+            [cdkDragData]="lot"
+            [class.drag-row]="isDragEnabled">
+          <td *ngIf="isDragEnabled" class="drag-handle-cell">
+            <div class="drag-handle" cdkDragHandle>
+              <i class="ri-drag-move-fill"></i>
+            </div>
+          </td>
+          <td>{{ lot.lotNumber }}</td>
+          <td>{{ lot.make }} {{ lot.model }}</td>
+          <td>{{ lot.year }}</td>
+          <td class="toggle-column">{{ lot.transmission }}</td>
+          <td class="toggle-column">{{ lot.fuel }}</td>
+          <td class="toggle-column">{{ lot.color }}</td>
+          <td class="toggle-column">{{ lot.mileage }} km</td>
+          <td class="toggle-column">{{ lot.location }}</td>
+          <td class="toggle-column">{{ lot.registration }}</td>
+          <td>
+            <ng-container *ngIf="!isEditing(lot.lotNumber, 'reservePrice'); else reservePriceEdit">
+              £{{ lot.reservePrice }}
+              <button class="edit-button" (click)="startEdit(lot.lotNumber, 'reservePrice')">
+                <i class="ri-edit-line"></i>
+              </button>
+            </ng-container>
+            <ng-template #reservePriceEdit>
+              <div class="edit-field">
+                <input type="number" [(ngModel)]="lot.reservePrice" min="0">
+                <div class="edit-actions">
+                  <button class="save-button" (click)="saveEdit(lot, 'reservePrice', lot.reservePrice)">
+                    <i class="ri-check-line"></i>
+                  </button>
+                  <button class="cancel-button" (click)="cancelEdit(lot.lotNumber, 'reservePrice')">
+                    <i class="ri-close-line"></i>
+                  </button>
+                </div>
+              </div>
+            </ng-template>
+          </td>
+          <td>
+            <ng-container *ngIf="!isEditing(lot.lotNumber, 'initialAskingPrice'); else initialAskingPriceEdit">
+              £{{ lot.initialAskingPrice }}
+              <button class="edit-button" (click)="startEdit(lot.lotNumber, 'initialAskingPrice')">
+                <i class="ri-edit-line"></i>
+              </button>
+            </ng-container>
+            <ng-template #initialAskingPriceEdit>
+              <div class="edit-field">
+                <input type="number" [(ngModel)]="lot.initialAskingPrice" min="0">
+                <div class="edit-actions">
+                  <button class="save-button" (click)="saveEdit(lot, 'initialAskingPrice', lot.initialAskingPrice)">
+                    <i class="ri-check-line"></i>
+                  </button>
+                  <button class="cancel-button" (click)="cancelEdit(lot.lotNumber, 'initialAskingPrice')">
+                    <i class="ri-close-line"></i>
+                  </button>
+                </div>
+              </div>
+            </ng-template>
+          </td>
+          <td>{{ lot.lastAuctionBid ? '£' + lot.lastAuctionBid : '-' }}</td>
+          <td>{{ lot.indicataMarketPrice ? '£' + lot.indicataMarketPrice : '-' }}</td>
+          <td>
+            <div class="dealer-activity">
+              <div class="stat-item clickable" *ngIf="lot.viewers > 0" (click)="openViewersDialog(lot)" title="Viewers: Dealers who have viewed the detail page of this lot">
+                <i class="ri-eye-line"></i>
+                <span>{{ lot.viewers }}</span>
+              </div>
+              <div class="stat-item clickable" *ngIf="lot.watchers > 0" (click)="openWatchersDialog(lot)" title="Watchers: Dealers who have marked this lot as a favorite">
+                <i class="ri-star-line"></i>
+                <span>{{ lot.watchers }}</span>
+              </div>
+              <div class="stat-item clickable" *ngIf="lot.leadListUsers > 0" (click)="openLeadsDialog(lot)" title="Leads: Dealers who have expressed interest in this lot and are on the lead list">
+                <i class="ri-list-check-2"></i>
+                <span>{{ lot.leadListUsers }}</span>
+              </div>
+              <div class="stat-item clickable" *ngIf="lot.onlineUsers > 0" (click)="openOnlineDialog(lot)" title="Online Users: Dealers who are currently online and viewing this lot">
+                <i class="ri-user-line"></i>
+                <span>{{ lot.onlineUsers }}</span>
+              </div>
+            </div>
+          </td>
+          
+          <!-- This template is shown during the drag operation -->
+          <ng-template cdkDragPreview>
+            <div class="drag-preview">
+              <div class="drag-preview-content">
+                <strong>Lot {{ lot.lotNumber }}: {{ lot.year }} {{ lot.make }} {{ lot.model }}</strong>
+              </div>
+            </div>
+          </ng-template>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <!-- Reuse the same dialog components as in the app component -->
+  <app-user-list-dialog
+    [isOpen]="isViewersDialogOpen"
+    [users]="viewers"
+    [type]="'Viewer'"
+    [title]="'Current Viewers'"
+    [description]="'A viewer is a dealer who has viewed the detail page of this lot.'"
+    (close)="closeViewersDialog()">
+  </app-user-list-dialog>
+
+  <app-user-list-dialog
+    [isOpen]="isWatchersDialogOpen"
+    [users]="watchers"
+    [type]="'Watcher'"
+    [title]="'Watchers'"
+    [description]="'A watcher is a dealer who has marked this lot as a favorite.'"
+    (close)="closeWatchersDialog()">
+  </app-user-list-dialog>
+
+  <app-user-list-dialog
+    [isOpen]="isLeadsDialogOpen"
+    [users]="leads"
+    [type]="'Lead'"
+    [title]="'Leads'"
+    [description]="'A lead is a dealer who has expressed interest in this lot and is on the lead list.'"
+    (close)="closeLeadsDialog()">
+  </app-user-list-dialog>
+
+  <app-user-list-dialog
+    [isOpen]="isOnlineDialogOpen"
+    [users]="onlineUsers"
+    [type]="'Online'"
+    [title]="'Online Users'"
+    [description]="'These dealers are currently online and viewing this lot.'"
+    (close)="closeOnlineDialog()">
+  </app-user-list-dialog>
+</div>

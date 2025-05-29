@@ -1,0 +1,84 @@
+/* Status indicators and badges */
+.lot-status {
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-weight: 500;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  display: inline-block;
+}
+
+.lot-status.pending,
+.lot-status-badge.pending {
+  background-color: #e9ecef;
+  color: #495057;
+}
+
+.lot-status.active,
+.lot-status-badge.active {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.lot-status.sold,
+.lot-status-badge.sold {
+  background-color: #cce5ff;
+  color: #004085;
+}
+
+.lot-status.no_sale,
+.lot-status-badge.no_sale {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.lot-status.withdrawn,
+.lot-status-badge.withdrawn {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.lot-status-badge {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.dealer-type {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.dealer-type.standard {
+  background: #e9ecef;
+  color: #495057;
+}
+
+.dealer-type.premium {
+  background: #cce5ff;
+  color: #004085;
+}
+
+.dealer-type.vip {
+  background: #ffeeba;
+  color: #856404;
+}
+
+.bid-type {
+  font-size: 0.75rem;
+  padding: 0.2rem 0.4rem;
+  border-radius: 3px;
+  background: #e9ecef;
+  color: #495057;
+}
+
+.negative {
+  color: #dc3545;
+}

@@ -1,0 +1,114 @@
+<div class="dialog-overlay" *ngIf="isOpen" (click)="onClose()">
+  <div class="dialog" (click)="$event.stopPropagation()">
+    <div class="dialog-header">
+      <h3>Settings</h3>
+      <button class="button button-icon" (click)="onClose()">
+        <i class="ri-close-line"></i>
+      </button>
+    </div>
+    <div class="dialog-tabs">
+      <button 
+        class="tab-button" 
+        [class.active]="activeTab === 'general'"
+        (click)="activeTab = 'general'">
+        General
+      </button>
+      <button 
+        class="tab-button" 
+        [class.active]="activeTab === 'shortcuts'"
+        (click)="activeTab = 'shortcuts'">
+        Keyboard Shortcuts
+      </button>
+    </div>
+    <div class="dialog-content">
+      <div class="tab-content" *ngIf="activeTab === 'general'">
+        <div class="setting-item">
+          <label class="toggle-label">Show Keyboard Shortcuts</label>
+          <label class="toggle">
+            <input type="checkbox" [(ngModel)]="showShortcutsInUI" (change)="onToggleShowShortcuts()">
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div class="setting-item">
+          <label class="toggle-label">Enable Voice Assistant</label>
+          <label class="toggle">
+            <input type="checkbox" [(ngModel)]="voiceEnabled" (change)="onToggleVoice()">
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div class="setting-item">
+          <label class="toggle-label">Enable Bid Sounds</label>
+          <label class="toggle">
+            <input type="checkbox" [(ngModel)]="soundEnabled" (change)="onToggleSound()">
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div class="setting-item">
+          <label class="toggle-label">Enable Simulated Bidding</label>
+          <label class="toggle">
+            <input type="checkbox" [(ngModel)]="simulatedBiddingEnabled" (change)="onToggleSimulatedBidding()">
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div class="setting-item">
+          <label class="toggle-label">Skip Action Confirmations</label>
+          <label class="toggle">
+            <input type="checkbox" [(ngModel)]="skipConfirmations" (change)="onToggleSkipConfirmations()">
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div class="setting-item">
+          <label class="form-label">Speech Recognition Sensitivity</label>
+          <input type="range" min="0" max="1" step="0.1" [(ngModel)]="speechRecognitionSensitivity" (change)="onSpeechRecognitionSensitivityChanged()" class="sensitivity-slider">
+        </div>
+        <div class="setting-item">
+          <label class="form-label">Preferred Voice</label>
+          <select [(ngModel)]="selectedVoice" (change)="onSelectedVoiceChanged()" class="voice-select">
+            <option *ngFor="let voice of availableVoices" [value]="voice.id">{{ voice.name }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="tab-content shortcuts-section" *ngIf="activeTab === 'shortcuts'">
+        <div class="shortcut-list">
+          <div class="shortcut-item">
+            <span class="shortcut-key"><span class="key">Alt</span>+<span class="key">X</span></span>
+            <span class="shortcut-description">Start Lot / Move to Next Lot</span>
+          </div>
+          <div class="shortcut-item">
+            <span class="shortcut-key"><span class="key">Alt</span>+<span class="key">H</span></span>
+            <span class="shortcut-description">Hammer</span>
+          </div>
+          <div class="shortcut-item">
+            <span class="shortcut-key"><span class="key">Alt</span>+<span class="key">R</span></span>
+            <span class="shortcut-description">Random Bid</span>
+          </div>
+          <div class="shortcut-item">
+            <span class="shortcut-key"><span class="key">Alt</span>+<span class="key">1</span></span>
+            <span class="shortcut-description">Bid User 1</span>
+          </div>
+          <div class="shortcut-item">
+            <span class="shortcut-key"><span class="key">Alt</span>+<span class="key">2</span></span>
+            <span class="shortcut-description">Bid User 2</span>
+          </div>
+          <div class="shortcut-item">
+            <span class="shortcut-key"><span class="key">Alt</span>+<span class="key">W</span></span>
+            <span class="shortcut-description">Bid War</span>
+          </div>
+          <div class="shortcut-item">
+            <span class="shortcut-key"><span class="key">Alt</span>+<span class="key">Q</span></span>
+            <span class="shortcut-description">Toggle Simulated Bidding</span>
+          </div>
+          <div class="shortcut-item">
+            <span class="shortcut-key"><span class="key">Alt</span>+<span class="key">T</span></span>
+            <span class="shortcut-description">Talk (Speech Recognition)</span>
+          </div>
+          <div class="shortcut-item">
+            <span class="shortcut-key"><span class="key">Alt</span>+<span class="key">S</span></span>
+            <span class="shortcut-description">Settings</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
