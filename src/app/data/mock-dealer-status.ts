@@ -26,8 +26,6 @@ const now = new Date();
 const sixHoursAgo = new Date(now.getTime() - 6 * 60 * 60 * 1000);
 
 const updateDealerStatuses = (currentLotNumber: number, dealers: any[] = []) => {
-  console.log('updateDealerStatuses called with dealers:', dealers.length);
-  
   dealers.forEach(dealer => {
     // Skip bid users
     if (dealer.TYPE === 'Bid User 1' || dealer.TYPE === 'Bid User 2') {
@@ -39,7 +37,6 @@ const updateDealerStatuses = (currentLotNumber: number, dealers: any[] = []) => 
                      (dealer.ID ? dealer.ID.toString() : '');
     
     if (!dealerId) {
-      console.warn('Dealer without ID found:', dealer);
       return;
     }
 
@@ -59,8 +56,6 @@ const updateDealerStatuses = (currentLotNumber: number, dealers: any[] = []) => 
 
     MOCK_DEALER_STATUS.set(dealerId, status);
   });
-  
-  console.log('Updated dealer statuses:', MOCK_DEALER_STATUS.size);
 };
 
 // Function to get dealer status

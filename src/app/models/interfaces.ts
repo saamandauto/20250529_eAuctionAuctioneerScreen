@@ -112,6 +112,7 @@ export interface LotFinalState {
   soldTo: string;
   soldToId: string;
   bids: Bid[];
+  status: LotStatus;  // Required status field
 }
 
 export interface Message {

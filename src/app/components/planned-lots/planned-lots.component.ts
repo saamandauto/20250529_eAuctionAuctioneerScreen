@@ -21,10 +21,8 @@ import { ToastrService } from 'ngx-toastr';
     CdkDropList
   ],
   templateUrl: './planned-lots.component.html',
-  styleUrls: ['./planned-lots.component.scss'],
-  host: {
-    '[style.--toggle-visible]': '"none"'
-  }
+  styleUrls: ['./planned-lots.component.scss']
+  // Removed the host property that was overriding CSS media queries
 })
 export class PlannedLotsComponent implements OnInit {
   @Input() lots: LotDetails[] = [];

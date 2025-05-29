@@ -15,12 +15,14 @@
   padding: 1rem;
   border-bottom: 1px solid #dee2e6;
   flex-shrink: 0;
+  position: relative;
 }
 
 .header-content {
   display: flex;
   align-items: center;
   gap: 1rem;
+  flex: 1;
 }
 
 .dialog-header h3 {
@@ -44,6 +46,46 @@
   border-radius: 8px;
   display: grid;
   gap: 0.75rem;
+  position: relative;
+}
+
+.lot-result-status {
+  margin-left: 1rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.lot-result-status.sold {
+  background-color: #cce5ff;
+  color: #004085;
+}
+
+.lot-result-status.no_sale {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.lot-result-status.withdrawn {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.status-message {
+  grid-column: 1 / -1;
+  padding: 0.75rem;
+  border-radius: 6px;
+  margin-top: 0.5rem;
+  font-weight: 500;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.status-message:only-child {
+  margin-top: 0;
 }
 
 .summary-row {
@@ -59,7 +101,7 @@
 }
 
 .summary-row span:first-child {
-  color: #495057;
+  color: #6c757d;
   font-weight: 500;
 }
 
@@ -161,4 +203,11 @@
   color: #ff5722;
   font-style: italic;
   font-weight: 500;
+}
+
+.empty-message {
+  text-align: center;
+  padding: 2rem;
+  color: #6c757d;
+  font-style: italic;
 }

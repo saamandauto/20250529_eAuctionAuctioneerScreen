@@ -8,11 +8,7 @@ import { environment } from '../../environments/environment';
 export class SupabaseService {
   private static supabaseInstance: SupabaseClient | null = null;
 
-  constructor() {
-    console.log('SupabaseService initialized');
-    console.log('Supabase URL:', environment.supabase.url);
-    console.log('Supabase Anon Key (first 10 chars):', environment.supabase.anonKey.substring(0, 10) + '...');
-  }
+  constructor() {}
 
   /**
    * Get the singleton Supabase client instance
@@ -20,8 +16,6 @@ export class SupabaseService {
    */
   getClient(): SupabaseClient {
     if (!SupabaseService.supabaseInstance) {
-      console.log('Creating new Supabase client instance');
-      
       try {
         SupabaseService.supabaseInstance = createClient(
           environment.supabase.url,
@@ -40,13 +34,9 @@ export class SupabaseService {
             }
           }
         );
-        console.log('Supabase client created successfully');
       } catch (error) {
-        console.error('Error creating Supabase client:', error);
         throw error;
       }
-    } else {
-      console.log('Using existing Supabase client instance');
     }
     
     return SupabaseService.supabaseInstance;

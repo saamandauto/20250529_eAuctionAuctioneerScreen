@@ -30,7 +30,7 @@ export class VoiceService {
     try {
       this.audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
     } catch (error) {
-      console.error('Web Audio API is not supported in this browser', error);
+      // Web Audio API is not supported in this browser
     }
   }
 
@@ -103,7 +103,6 @@ export class VoiceService {
     
     // If we've already detected a credits error, don't try to speak
     if (this.hasCreditsError.value) {
-      console.log('Skipping speech due to credits error');
       return;
     }
     
@@ -123,7 +122,6 @@ export class VoiceService {
     if (isBidAnnouncement) {
       const now = Date.now();
       if (now - this.lastBidAnnounceTime < this.bidAnnounceCooldown) {
-        console.log('Skipping bid announcement due to cooldown:', truncatedText);
         return;
       }
       this.lastBidAnnounceTime = now;
@@ -132,7 +130,6 @@ export class VoiceService {
     // Throttle repeated messages
     const now = Date.now();
     if (truncatedText === this.lastSpokenMessage && now - this.lastSpeakTime < this.throttleTimeMs) {
-      console.log('Skipping repeated message:', truncatedText);
       return;
     }
     
@@ -182,7 +179,6 @@ export class VoiceService {
       // Continue with next item in queue
       this.playNextInQueue();
     } catch (error) {
-      console.error('Error playing audio:', error);
       this.isPlaying = false;
       
       // Check if this is a credits error (401)
@@ -267,8 +263,6 @@ export class VoiceService {
         }
       });
     } catch (error) {
-      console.error('Error with text-to-speech:', error);
-      
       // Don't retry if the error is a stack overflow or contains "Maximum call stack size exceeded"
       // Also don't retry authentication errors
       const errorMessage = this.getErrorMessage(error);
@@ -284,7 +278,6 @@ export class VoiceService {
       if (errorMessage.includes('Failed to fetch') || 
           errorMessage.includes('NetworkError') || 
           errorMessage.includes('timeout')) {
-        console.log(`Retrying playAudio (attempt ${retryCount + 1} of ${this.maxRetries})...`);
         return this.playAudio(text, retryCount + 1);
       }
       

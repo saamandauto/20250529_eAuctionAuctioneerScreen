@@ -101,82 +101,52 @@ export class DealerService {
     }
   ];
 
-  constructor(private supabaseService: SupabaseService) {
-    console.log('DealerService initialized');
-  }
+  constructor(private supabaseService: SupabaseService) {}
 
   getDealers(): Observable<Dealer[]> {
-    console.log('DealerService - Starting to fetch dealers from Supabase');
-    console.log('Supabase URL:', environment.supabase.url);
-    console.log('Supabase Anon Key:', environment.supabase.anonKey.substring(0, 10) + '...');
-    
-    console.log('DealerService - Executing Supabase query on table: loggedInDealers');
     return from(
       this.supabaseService.getClient()
         .from('loggedInDealers')
         .select('*')
     ).pipe(
       tap(response => {
-        console.log('DealerService - Supabase response received:', response);
         if (response.error) {
-          console.error('DealerService - Error in Supabase response:', response.error);
-        } else {
-          console.log('DealerService - Number of records returned:', response.data?.length || 0);
+          // Error in Supabase response
         }
       }),
       map(({ data, error }) => {
         if (error) {
-          console.error('Error fetching dealers from Supabase:', error);
           throw error;
         }
         
-        console.log('DealerService - Raw data from Supabase:', JSON.stringify(data || [], null, 2));
-        
         if (!data || data.length === 0) {
-          console.warn('No dealers returned from Supabase, using fallback dealers');
           const combinedFallback = [...this.fallbackDealers, ...this.mockBidUsers];
-          console.log('DealerService - Using fallback dealers, count:', combinedFallback.length);
           return this.prepareDealerData(combinedFallback);
         }
         
         // Combine with mock bid users
         const allDealers = [...data, ...this.mockBidUsers];
-        console.log('DealerService - Combined dealers count (DB + mock):', allDealers.length);
         return this.prepareDealerData(allDealers);
       }),
       catchError(err => {
-        console.error('Failed to fetch dealers from Supabase:', err);
-        if (err.message) console.error('Error message:', err.message);
-        if (err.stack) console.error('Error stack:', err.stack);
-        
         const combinedFallback = [...this.fallbackDealers, ...this.mockBidUsers];
-        console.log('DealerService - Using fallback dealers after error:', combinedFallback.length);
         return of(this.prepareDealerData(combinedFallback));
       }),
       tap(dealers => {
-        console.log(`DealerService - Final dealers array ready, count: ${dealers.length}`);
+        // Final dealers array ready
       })
     );
   }
   
   private prepareDealerData(dealers: any[]): Dealer[] {
-    console.log('DealerService - Raw dealers data to prepare:', JSON.stringify(dealers, null, 2));
-    
-    // Check for column names to understand the structure
-    if (dealers.length > 0) {
-      console.log('DealerService - First dealer record columns:', Object.keys(dealers[0]));
-    }
-    
     return dealers.map(dealer => {
       // Check individual dealer before transformation
-      console.log('DealerService - Processing dealer:', dealer);
 
       // ID field workaround
       let dealerId = dealer.ID;
       if (dealerId === undefined) {
         // Check USR_ID next
         dealerId = dealer.USR_ID;
-        console.log(`DealerService - No ID field, using USR_ID: ${dealerId}`);
       }
 
       // Ensure all fields exist
@@ -200,9 +170,6 @@ export class DealerService {
         LASTNAME: dealer.LASTNAME || '',
         TYPE: dealer.TYPE || 'Standard'
       };
-      
-      console.log('DealerService - Prepared dealer ID:', preparedDealer.ID);
-      console.log('DealerService - Prepared dealer name:', `${preparedDealer.FIRSTNAME} ${preparedDealer.LASTNAME}`.trim());
       
       return preparedDealer;
     });

@@ -2,7 +2,7 @@ import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuctionDetailsComponent } from '../../components/auction-details/auction-details.component';
 import { BehaviorSubject, Observable, map } from 'rxjs';
-import { AuctionStateService } from '../../state/auction.state.service';
+import { AuctionStateService } from '../../auction/auction-state.service';
 
 @Component({
   selector: 'app-auction-details-feature',

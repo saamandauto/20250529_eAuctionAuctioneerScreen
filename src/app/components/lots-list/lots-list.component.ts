@@ -25,12 +25,10 @@ export class LotsListComponent implements OnChanges {
 
   ngOnInit() {
     this.filteredLots = this.lots;
-    console.log('LotsListComponent initialized with', this.lots.length, 'lots');
   }
 
   ngOnChanges() {
     this.filterLots();
-    console.log('LotsListComponent - ngOnChanges called, lots:', this.lots.length);
   }
 
   filterLots() {
@@ -63,7 +61,8 @@ export class LotsListComponent implements OnChanges {
   }
 
   onSelectLot(lot: LotDetails) {
-    if (lot.status === LotStatus.SOLD && lot.finalState) {
+    if (lot.finalState || lot.status === LotStatus.SOLD || 
+        lot.status === LotStatus.NO_SALE || lot.status === LotStatus.WITHDRAWN) {
       this.selectedLot = lot;
       this.isResultDialogOpen = true;
     } else if (this.canSelectLot(lot)) {
@@ -78,6 +77,5 @@ export class LotsListComponent implements OnChanges {
 
   toggleExpanded() {
     this.expanded = !this.expanded;
-    console.log('Lots list expanded state toggled:', this.expanded);
   }
 }

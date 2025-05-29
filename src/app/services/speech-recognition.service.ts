@@ -99,13 +99,11 @@ export class SpeechRecognitionService {
                 try {
                   this.recognition.start();
                 } catch (error) {
-                  console.error('Error restarting speech recognition:', error);
                   this.isListening.next(false);
                 }
               }
             }, 300); // Brief pause before restart
           } catch (error) {
-            console.error('Error restarting speech recognition:', error);
             this.isListening.next(false);
           }
         } else {
@@ -114,8 +112,6 @@ export class SpeechRecognitionService {
       };
 
       this.recognition.onerror = (event: any) => {
-        console.error('Speech recognition error', event.error);
-        
         // Handle critical errors that affect functionality
         if (event.error === 'no-speech') {
           this.noSpeechRetryCount++;
@@ -131,30 +127,8 @@ export class SpeechRecognitionService {
             this.retryTimeout = null;
           }
           
-          // Retry automatically without notifying the user
-          this.retryTimeout = setTimeout(() => {
-            if (this.isListening.value && this.isAltKeyHeld) {
-              try {
-                this.recognition.stop(); // Stop first to ensure clean restart
-                
-                // Add another timeout to ensure complete stop before restarting
-                setTimeout(() => {
-                  if (this.isListening.value && this.isAltKeyHeld) {
-                    try {
-                      this.recognition.start();
-                    } catch (error) {
-                      console.error('Error restarting after no-speech:', error);
-                      this.isListening.next(false);
-                    }
-                  }
-                }, 500); // Longer pause to ensure recognition has fully stopped
-                
-              } catch (error) {
-                console.error('Error stopping speech recognition:', error);
-                this.isListening.next(false);
-              }
-            }
-          }, this.retryDelay);
+          // Removed the call to non-existent method updateWithdrawCountdown
+          // The recognition restart is already handled by the onend handler
         } else if (event.error === 'audio-capture') {
           this.toastr.error('No microphone was found or microphone is disabled.');
           this.stopListening();
@@ -163,7 +137,6 @@ export class SpeechRecognitionService {
           this.stopListening();
         } else {
           // Only show critical errors
-          console.error(`Speech recognition error: ${event.error}`);
           this.stopListening();
         }
       };
@@ -195,7 +168,6 @@ export class SpeechRecognitionService {
         }
       };
     } else {
-      console.error('Web Speech API is not supported in this browser');
       this.toastr.error('Speech recognition is not supported in your browser.');
     }
   }
@@ -290,13 +262,11 @@ export class SpeechRecognitionService {
             this.hasShownActivationToast = true;
           }
         } catch (error) {
-          console.error('Error starting speech recognition:', error);
           this.toastr.error('Failed to start speech recognition.');
           this.isListening.next(false);
         }
       }, 300);
     } catch (error) {
-      console.error('Error in startListening:', error);
       this.toastr.error('Failed to start speech recognition.');
       this.isListening.next(false);
     }
@@ -316,7 +286,6 @@ export class SpeechRecognitionService {
       try {
         this.recognition.stop();
       } catch (error) {
-        console.error('Error stopping speech recognition:', error);
         // Already set listening to false, so no need to do it again
       }
     }

@@ -3,6 +3,10 @@
     <div class="dialog-header">
       <div class="header-content">
         <h3>Lot {{ lot?.lotNumber }} Results - {{ lot?.make }} {{ lot?.model }}</h3>
+        <!-- Moved status indicator to the header -->
+        <div class="lot-result-status" [ngClass]="getStatusClass()" *ngIf="finalState?.status">
+          {{ finalState?.status }}
+        </div>
       </div>
       <button class="button-icon" (click)="onClose()">
         <i class="ri-close-line"></i>
@@ -11,29 +15,55 @@
 
     <div class="dialog-content">
       <div class="result-summary">
-        <div class="summary-row">
-          <span>Final Price:</span>
-          <span class="price">£{{ (finalState?.soldPrice || 0).toLocaleString() }}</span>
-        </div>
-        <div class="summary-row">
-          <span>Reserve Price:</span>
-          <span>£{{ (finalState?.reservePrice || 0).toLocaleString() }}</span>
-        </div>
-        <div class="summary-row">
-          <span>Performance:</span>
-          <span [class.negative]="(finalState?.performance?.value || 0) < 0"
-                [class.positive]="(finalState?.performance?.value || 0) > 0">
-            {{ finalState?.performance?.text || '-' }}
-          </span>
-        </div>
-        <div class="summary-row">
-          <span>Sold Time:</span>
-          <span>{{ finalState?.soldTime || '-' }}</span>
-        </div>
-        <div class="summary-row">
-          <span>Sold To:</span>
-          <span>{{ finalState?.soldTo || '-' }}</span>
-        </div>
+        <!-- Show different information based on the lot status -->
+        <ng-container *ngIf="isSold(); else notSoldTemplate">
+          <div class="summary-row">
+            <span>Final Price:</span>
+            <span class="price">£{{ (finalState?.soldPrice || 0).toLocaleString() }}</span>
+          </div>
+          <div class="summary-row">
+            <span>Reserve Price:</span>
+            <span>£{{ (finalState?.reservePrice || 0).toLocaleString() }}</span>
+          </div>
+          <div class="summary-row">
+            <span>Performance:</span>
+            <span [class.negative]="(finalState?.performance?.value || 0) < 0"
+                  [class.positive]="(finalState?.performance?.value || 0) > 0">
+              {{ finalState?.performance?.text || '-' }}
+            </span>
+          </div>
+          <div class="summary-row">
+            <span>Sold Time:</span>
+            <span>{{ finalState?.soldTime || '-' }}</span>
+          </div>
+          <div class="summary-row">
+            <span>Sold To:</span>
+            <span>{{ finalState?.soldTo || '-' }}</span>
+          </div>
+        </ng-container>
+
+        <!-- Template for lots that are not sold -->
+        <ng-template #notSoldTemplate>
+          <div class="summary-row">
+            <span>Highest Bid:</span>
+            <span class="price">{{ getHighestBid() }}</span>
+          </div>
+          <div class="summary-row">
+            <span>Reserve Price:</span>
+            <span>£{{ (finalState?.reservePrice || 0).toLocaleString() }}</span>
+          </div>
+          <div class="summary-row">
+            <span>Time Processed:</span>
+            <span>{{ finalState?.soldTime || '-' }}</span>
+          </div>
+          
+          <div class="status-message" *ngIf="isWithdrawn()">
+            This lot was withdrawn from the auction.
+          </div>
+          <div class="status-message" *ngIf="isNoSale()">
+            This lot did not meet the reserve price and was not sold.
+          </div>
+        </ng-template>
       </div>
 
       <div class="bid-history">
@@ -61,6 +91,9 @@
                 </td>
                 <td>£{{ bid.amount.toLocaleString() }}</td>
                 <td>{{ bid.time }}</td>
+              </tr>
+              <tr *ngIf="bids.length === 0" class="empty-row">
+                <td colspan="3" class="empty-message">No bids were placed on this lot</td>
               </tr>
             </tbody>
           </table>

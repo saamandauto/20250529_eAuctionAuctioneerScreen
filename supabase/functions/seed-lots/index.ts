@@ -429,7 +429,6 @@ async function upsertLot(supabase, lot) {
     initial_asking_price: lot.initialAskingPrice,
     last_auction_bid: lot.lastAuctionBid,
     indicata_market_price: lot.indicataMarketPrice,
-    status: lot.status,
     viewers: lot.viewers,
     watchers: lot.watchers,
     lead_list_users: lot.leadListUsers,
@@ -463,8 +462,6 @@ Deno.serve(async (req) => {
     const SUPABASE_URL = Deno.env.get('SUPABASE_URL') || '';
     const SUPABASE_ANON_KEY = Deno.env.get('SUPABASE_ANON_KEY') || '';
     const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') || '';
-
-    console.log('Connecting to Supabase at:', SUPABASE_URL);
     
     // Create Supabase client using imported createClient
     const supabaseClient = createClient(
@@ -489,8 +486,19 @@ Deno.serve(async (req) => {
     }
     
     if (existingLots && existingLots.length > 0) {
-      console.log('Lots already exist in database, truncating table first');
-      // Clear existing lots before inserting new ones
+      console.log('Lots already exist in database, truncating tables first');
+      
+      // First, clear any existing final states and bids (due to cascading FK)
+      const { error: lotFinalStatesError } = await supabaseClient
+        .from('lot_final_states')
+        .delete()
+        .neq('id', '00000000-0000-0000-0000-000000000000');
+        
+      if (lotFinalStatesError) {
+        throw new Error(`Error truncating lot_final_states table: ${lotFinalStatesError.message}`);
+      }
+      
+      // Now clear the lots table
       const { error: truncateError } = await supabaseClient
         .from('lots')
         .delete()

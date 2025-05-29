@@ -82,8 +82,6 @@ export class AuctionStateService {
     private dealerService: DealerService,
     private lotService: LotService
   ) {
-    console.log('AuctionStateService initialized');
-    
     // Initialize the state subjects mapping
     this.initStateSubjects();
     
@@ -155,11 +153,9 @@ export class AuctionStateService {
   private loadDealers(): Observable<Dealer[]> {
     return this.dealerService.getDealers().pipe(
       tap(dealers => {
-        console.log('Dealers loaded successfully:', dealers.length);
         this.dealers$.next(dealers);
       }),
       catchError(error => {
-        console.error('Error fetching dealers:', error);
         return of([]);
       })
     );
@@ -169,11 +165,9 @@ export class AuctionStateService {
   private loadLots(): void {
     this.lotService.getLots().pipe(
       tap(lots => {
-        console.log('Lots loaded successfully from Supabase:', lots.length);
         this.processLoadedLots(lots);
       }),
       catchError(error => {
-        console.error('Error fetching lots:', error);
         return of([]);
       })
     ).subscribe();
@@ -215,7 +209,6 @@ export class AuctionStateService {
       case 'auctionTitle':
         return this.auctionTitle as AuctionState[K];
       default:
-        console.warn(`getValue called with unknown key: ${key}`);
         return null as unknown as AuctionState[K];
     }
   }
@@ -228,14 +221,11 @@ export class AuctionStateService {
     }
     
     // Fallback to specific observables for any keys not in the mapping
-    console.warn(`select called with unknown key: ${key}`);
     return of(null as unknown as AuctionState[K]);
   }
 
   // Type-safe method to update state
   public setState<K extends AuctionStateKey>(updates: Partial<Pick<AuctionState, K>>): void {
-    console.log('Setting state:', updates);
-    
     // Update each property from the provided updates object
     (Object.keys(updates) as K[]).forEach(key => {
       const subject = this.stateSubjects[key] as BehaviorSubject<AuctionState[K]>;
@@ -249,8 +239,6 @@ export class AuctionStateService {
           this.updateLeads();
           this.updateOnlineUsers();
         }
-      } else {
-        console.warn(`setState called with unknown key: ${key}`);
       }
     });
   }
@@ -491,40 +479,33 @@ export class AuctionStateService {
 
   // Setters
   setIsAuctionStarted(value: boolean): void {
-    console.log('Setting isAuctionStarted:', value);
     this.isAuctionStarted$.next(value);
   }
 
   setIsViewingLots(value: boolean): void {
-    console.log('Setting isViewingLots:', value);
     this.isViewingLots$.next(value);
   }
 
   setSimulatedBiddingEnabled(value: boolean): void {
-    console.log('Setting simulatedBiddingEnabled:', value);
     this.simulatedBiddingEnabled$.next(value);
     
     // Trigger the bidding service to reflect this change
     if (this.simulatedBiddingEnabled$.value && 
         this.lotStatus$.value === LotStatus.ACTIVE && 
         this.currentLot$.value) {
-      console.log('Starting bidding simulation due to setting enabled');
       // Note: The actual simulation start happens in the auction-event.service
       // which should be listening to this state change
     } else if (!this.simulatedBiddingEnabled$.value) {
-      console.log('Stopping bidding simulation due to setting disabled');
       // Note: The actual simulation stop happens in the auction-event.service
       // which should be listening to this state change
     }
   }
 
   setSkipConfirmations(value: boolean): void {
-    console.log('Setting skipConfirmations:', value);
     this.skipConfirmations$.next(value);
   }
 
   setCurrentLot(lot: LotDetails | null): void {
-    console.log('Setting currentLot:', lot?.lotNumber);
     this.currentLot$.next(lot);
     if (lot) {
       this.updateViewers();
@@ -549,16 +530,15 @@ export class AuctionStateService {
     // Then update in Supabase
     this.lotService.updateLot(updatedLot).subscribe(
       updatedLotFromDb => {
-        console.log('Lot updated in Supabase:', updatedLotFromDb);
+        // Lot updated in Supabase
       },
       error => {
-        console.error('Error updating lot in Supabase:', error);
+        // Error updating lot in Supabase
       }
     );
   }
 
   setLots(lots: LotDetails[]): void {
-    console.log('Setting lots:', lots.length);
     this.lots$.next(lots);
     
     // Update related data after reordering
@@ -569,7 +549,6 @@ export class AuctionStateService {
   }
 
   setLotStatus(status: LotStatus): void {
-    console.log('Setting lotStatus:', status);
     this.lotStatus$.next(status);
     
     if (this.currentLot$.value) {
@@ -579,37 +558,30 @@ export class AuctionStateService {
   }
 
   setHammerState(state: HammerState): void {
-    console.log('Setting hammerState:', state);
     this.hammerState$.next(state);
   }
 
   setCanControlLot(value: boolean): void {
-    console.log('Setting canControlLot:', value);
     this.canControlLot$.next(value);
   }
 
   setCanUseHammer(value: boolean): void {
-    console.log('Setting canUseHammer:', value);
     this.canUseHammer$.next(value);
   }
 
   setCurrentHighestBid(value: number | null): void {
-    console.log('Setting currentHighestBid:', value);
     this.currentHighestBid$.next(value);
   }
 
   setAskingPrice(value: number): void {
-    console.log('Setting askingPrice:', value);
     this.askingPrice$.next(value);
   }
 
   setStartPrice(value: number): void {
-    console.log('Setting startPrice:', value);
     this.startPrice$.next(value);
   }
 
   setBidIncrement(value: number): void {
-    console.log('Setting bidIncrement:', value);
     this.bidIncrement$.next(value);
   }
 
@@ -619,42 +591,35 @@ export class AuctionStateService {
 
   incrementSoldLots(): void {
     const newValue = this.soldLots$.value + 1;
-    console.log('Incrementing soldLots to:', newValue);
     this.soldLots$.next(newValue);
   }
 
   incrementWithdrawnLots(): void {
     const newValue = this.withdrawnLots$.value + 1;
-    console.log('Incrementing withdrawnLots to:', newValue);
     this.withdrawnLots$.next(newValue);
   }
 
   addToTotalSoldValue(value: number): void {
     const newValue = this.totalSoldValue$.value + value;
-    console.log('Adding to totalSoldValue:', value, 'New total:', newValue);
     this.totalSoldValue$.next(newValue);
   }
 
   addToTotalReserveValue(value: number): void {
     const newValue = this.totalReserveValue$.value + value;
-    console.log('Adding to totalReserveValue:', value, 'New total:', newValue);
     this.totalReserveValue$.next(newValue);
   }
 
   incrementAuctioneerBidsCount(): void {
     const newValue = this.auctioneerBidsCount$.value + 1;
-    console.log('Incrementing auctioneerBidsCount to:', newValue);
     this.auctioneerBidsCount$.next(newValue);
   }
 
   incrementDealerBidsCount(): void {
     const newValue = this.dealerBidsCount$.value + 1;
-    console.log('Incrementing dealerBidsCount to:', newValue);
     this.dealerBidsCount$.next(newValue);
   }
 
   setSelectedDealer(dealer: Dealer | null): void {
-    console.log('Setting selectedDealer:', dealer?.USR_ID || dealer?.ID || null);
     this.selectedDealer$.next(dealer);
     
     // Mark messages as read
@@ -670,7 +635,6 @@ export class AuctionStateService {
   }
 
   addBid(bid: Bid): void {
-    console.log('Adding new bid:', bid.bidder, bid.amount, bid.bidType);
     this.bids$.next([bid, ...this.bids$.value]);
     this.currentHighestBid$.next(bid.amount);
     this.highestBid$.next(bid);
@@ -683,7 +647,6 @@ export class AuctionStateService {
   }
 
   resetLotState(): void {
-    console.log('Resetting lot state');
     this.lotStatus$.next(LotStatus.PENDING);
     this.hammerState$.next(HammerState.ACCEPTING_BIDS);
     this.canControlLot$.next(true);

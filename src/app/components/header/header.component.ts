@@ -114,7 +114,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
   
   onToggleView() {
-    console.log('Header component - toggle view called, current state:', this.isViewingLots);
     this.toggleView.emit();
     if (this.voiceEnabled && !this.hasCreditsError) {
       const message = this.isViewingLots ? 
@@ -125,9 +124,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   onToggleSimulatedBidding() {
-    console.log('Header component - toggle simulated bidding called');
-    console.log('Current simulatedBiddingEnabled state:', this.simulatedBiddingEnabled);
-    
     // Emit the boolean value directly without double negation
     this.toggleSimulatedBidding.emit(this.simulatedBiddingEnabled);
     // Removed speech for simulation toggle

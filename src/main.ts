@@ -17,7 +17,7 @@ bootstrapApplication(AppComponent, {
       iconClasses: {
         error: 'toast-error',
         info: 'toast-warning',
-        success: 'toast-warning',
+        success: 'toast-success',
         warning: 'toast-warning'
       }
     }))

@@ -27,9 +27,7 @@ export class KeyboardShortcutService {
     { key: 's', alt: true, description: 'Settings' }
   ];
 
-  constructor() {
-    console.log('KeyboardShortcutService initialized');
-  }
+  constructor() {}
 
   getShortcuts(): KeyboardShortcut[] {
     return this.shortcuts;

@@ -85,7 +85,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     // Initialize auction state if needed
-    console.log('App component initialized');
   }
   
   ngOnDestroy(): void {
@@ -117,7 +116,6 @@ export class AppComponent implements OnInit, OnDestroy {
   }
   
   toggleSimulatedBidding(): void {
-    console.log('App component - toggleSimulatedBidding called');
     this.auctionEventService.toggleSimulatedBidding();
   }
   

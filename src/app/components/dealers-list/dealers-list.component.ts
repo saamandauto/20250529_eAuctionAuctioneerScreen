@@ -23,12 +23,10 @@ export class DealersListComponent implements OnInit, OnChanges {
   currentFilter: DealerFilter = 'all';
 
   ngOnInit() {
-    console.log('DealersListComponent initialized with dealers:', this.dealers?.length);
     this.filterDealers();
   }
 
   ngOnChanges() {
-    console.log('DealersListComponent - dealers changed:', this.dealers?.length);
     this.filterDealers();
   }
 
@@ -50,10 +48,7 @@ export class DealersListComponent implements OnInit, OnChanges {
   }
 
   filterDealers() {
-    console.log('DealersListComponent - filterDealers called with dealers:', this.dealers?.length);
-    
     if (!this.dealers || this.dealers.length === 0) {
-      console.warn('No dealers available to filter');
       this.filteredDealers = [];
       return;
     }
@@ -64,20 +59,16 @@ export class DealersListComponent implements OnInit, OnChanges {
       return type !== 'Bid User 1' && type !== 'Bid User 2';
     });
 
-    console.log('DealersListComponent - after filtering bid users:', dealers.length);
-
     // Apply status filter
     if (this.currentFilter !== 'all') {
       dealers = dealers.filter(dealer => {
         const dealerId = this.getDealerId(dealer);
         if (!dealerId) {
-          console.log('Dealer missing ID:', dealer);
           return false;
         }
         
         const status = getDealerStatus(dealerId);
         if (!status) {
-          console.log('No status found for dealer:', dealerId);
           return false;
         }
 
@@ -89,8 +80,6 @@ export class DealersListComponent implements OnInit, OnChanges {
           default: return true;
         }
       });
-      
-      console.log('DealersListComponent - after applying status filter:', dealers.length);
     }
 
     // Apply search filter
@@ -111,8 +100,6 @@ export class DealersListComponent implements OnInit, OnChanges {
           dealer.FIRSTNAME?.toLowerCase().includes(term) ||
           dealer.LASTNAME?.toLowerCase().includes(term);
       });
-      
-      console.log('DealersListComponent - after applying search filter:', dealers.length);
     }
 
     // Sort alphabetically using name from either format
@@ -121,8 +108,6 @@ export class DealersListComponent implements OnInit, OnChanges {
       const nameB = this.getDealerName(b);
       return nameA.localeCompare(nameB);
     });
-    
-    console.log('DealersListComponent - final filtered dealers count:', this.filteredDealers.length);
   }
 
   get displayedDealers(): Dealer[] {
@@ -137,7 +122,6 @@ export class DealersListComponent implements OnInit, OnChanges {
 
   toggleExpanded() {
     this.expanded = !this.expanded;
-    console.log('Dealers list expanded state toggled:', this.expanded);
   }
 
   getDealerTooltip(dealer: Dealer): string {
@@ -172,7 +156,6 @@ ID: ${dealerId}${lastActive}${lastBuy}${lastLogin}
   }
 
   onDealerClick(dealer: Dealer) {
-    console.log('DealersListComponent - dealer clicked:', this.getDealerName(dealer));
     this.selectDealer.emit(dealer);
   }
 

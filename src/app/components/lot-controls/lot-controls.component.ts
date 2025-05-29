@@ -97,7 +97,7 @@ export class LotControlsComponent {
       return 'Lot has been withdrawn';
     } else if (this.lotStatus === LotStatus.ACTIVE) {
       if (this.withdrawCountdownActive) {
-        return `Withdrawing lot in ${this.withdrawCountdownValue}`;
+        return `Withdrawing in ${this.withdrawCountdownValue}`;
       }
       
       // During hammer sequence, show appropriate text

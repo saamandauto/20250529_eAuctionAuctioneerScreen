@@ -1,1 +1,0 @@
-export { AuctionStateService } from './auction.state.service';

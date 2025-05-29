@@ -24,9 +24,7 @@ export class BiddingService {
   constructor(
     private auctionService: AuctionService,
     private soundService: SoundService
-  ) {
-    console.log('BiddingService initialized');
-  }
+  ) {}
 
   getBids() {
     return this.bidSubject.asObservable();
@@ -39,17 +37,7 @@ export class BiddingService {
     reservePrice: number,
     askingPrice?: number
   ) {
-    console.log('startSimulation called with:', {
-      biddingEnabled: this.biddingEnabled,
-      dealersCount: dealers.length,
-      currentHighestBid,
-      bidIncrement,
-      reservePrice,
-      askingPrice
-    });
-    
     if (!this.biddingEnabled) {
-      console.log('Bidding not enabled, cannot start simulation');
       return;
     }
     
@@ -65,10 +53,7 @@ export class BiddingService {
     // Filter out bid users
     this.availableDealers = dealers.filter(d => d.TYPE !== 'Bid User 1' && d.TYPE !== 'Bid User 2');
     
-    console.log(`Filtered dealers for simulation: ${this.availableDealers.length} available`);
-    
     if (this.availableDealers.length === 0) {
-      console.warn('No available dealers for bidding simulation!');
       return;
     }
 
@@ -76,32 +61,21 @@ export class BiddingService {
     this.currentBidding$ = timer(0, this.getRandomInterval()).pipe(
       filter(() => {
         const shouldContinue = this.shouldContinueBidding();
-        console.log(`Should continue bidding? ${shouldContinue}`, {
-          enabled: this.biddingEnabled,
-          currentBid: this.currentBidAmount,
-          askingPrice: this.currentAskingPrice,
-          reserveLimit: this.currentReservePrice * 1.1
-        });
         return shouldContinue;
       })
     ).subscribe(() => {
-      console.log('Generating a new bid');
       this.generateNewBid();
     });
-    
-    console.log('Bidding simulation started');
   }
 
   stopSimulation() {
     if (this.currentBidding$) {
-      console.log('Stopping existing bid simulation');
       this.currentBidding$.unsubscribe();
       this.currentBidding$ = null;
     }
   }
 
   setEnabled(enabled: boolean) {
-    console.log(`Setting bidding simulation enabled: ${enabled}`);
     this.biddingEnabled = enabled;
     if (!enabled) {
       this.stopSimulation();
@@ -110,7 +84,6 @@ export class BiddingService {
   
   // Update the asking price for simulation
   updateAskingPrice(newAskingPrice: number) {
-    console.log('Updating asking price for simulation:', newAskingPrice);
     this.currentAskingPrice = newAskingPrice;
   }
 
@@ -127,7 +100,6 @@ export class BiddingService {
 
   private generateNewBid() {
     if (!this.availableDealers.length) {
-      console.warn('No available dealers to generate bids');
       return;
     }
 
@@ -159,8 +131,6 @@ export class BiddingService {
       city: randomDealer.city,
       country: randomDealer.country
     };
-
-    console.log(`Generated new bid: ${bid.bidder} - €${bid.amount}`);
 
     // Update current bid amount
     this.currentBidAmount = newBidAmount;

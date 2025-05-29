@@ -35,24 +35,19 @@ export class BiddingComponent {
   @Output() bidIncrementChanged = new EventEmitter<number>();
   @Output() auctioneerBidCountChanged = new EventEmitter<void>();
 
-  constructor(private auctionService: AuctionService) {
-    console.log('BiddingComponent initialized');
-  }
+  constructor(private auctionService: AuctionService) {}
 
   onSetAskingPrice(newPrice: number) {
-    console.log('Setting asking price to:', newPrice);
     if (newPrice > (this.currentHighestBid || 0)) {
       this.askingPriceChanged.emit(newPrice);
     }
   }
 
   onAdjustBidIncrement(amount: number) {
-    console.log('Adjusting bid increment by:', amount);
     this.bidIncrementChanged.emit(amount);
   }
 
   onMakeNewHighBid() {
-    console.log('Making new high bid with amount:', this.newBidAmount);
     if (this.newBidAmount > (this.currentHighestBid || 0)) {
       this.onPlaceBid('high');
       this.auctioneerBidCountChanged.emit();
@@ -60,7 +55,6 @@ export class BiddingComponent {
   }
 
   onPlaceBid(type: string) {
-    console.log('Placing bid of type:', type);
     let dealer: Dealer;
     let bidType: string;
     let isAuctioneerBid = false;
@@ -117,7 +111,6 @@ export class BiddingComponent {
       country: dealer.country
     };
 
-    console.log('Created bid:', bid);
     this.bidPlaced.emit(bid);
 
     if (isAuctioneerBid) {
@@ -126,7 +119,6 @@ export class BiddingComponent {
   }
 
   onStartBidWar() {
-    console.log('Starting bid war');
     const bidUser1 = this.dealers.find(d => d.TYPE === 'Bid User 1')!;
     const bidUser2 = this.dealers.find(d => d.TYPE === 'Bid User 2')!;
     

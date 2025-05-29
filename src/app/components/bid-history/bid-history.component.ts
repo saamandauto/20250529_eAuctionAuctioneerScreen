@@ -25,7 +25,6 @@ export class BidHistoryComponent {
 
   toggleExpanded() {
     this.expanded = !this.expanded;
-    console.log('Bid history expanded state toggled:', this.expanded);
   }
 
   getBidderTooltip(bid: Bid): string {

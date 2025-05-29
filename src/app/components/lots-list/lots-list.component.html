@@ -24,8 +24,8 @@
       <tbody>
         <tr *ngFor="let lot of displayedLots" 
             (click)="onSelectLot(lot)" 
-            [class.clickable]="canSelectLot(lot) || lot.status === 'Sold'"
-            [class.disabled]="!canSelectLot(lot) && lot.status !== 'Sold'">
+            [class.clickable]="canSelectLot(lot) || lot.status === 'Sold' || lot.status === 'No Sale' || lot.status === 'Withdrawn' || lot.finalState"
+            [class.disabled]="!canSelectLot(lot) && lot.status !== 'Sold' && lot.status !== 'No Sale' && lot.status !== 'Withdrawn' && !lot.finalState">
           <td>{{ lot.lotNumber }}</td>
           <td>{{ lot.make }} {{ lot.model }}</td>
           <td>

@@ -243,6 +243,28 @@ export class AuctionEventService {
         canControlLot: false,
         canUseHammer: false
       });
+
+      // Create final state for No Sale
+      const bids = this.auctionState.getValue('bids');
+      const currentHighestBid = this.auctionState.getValue('currentHighestBid');
+      
+      // Update the lot with final state
+      const updatedLot = { 
+        ...currentLot, 
+        status: LotStatus.NO_SALE, // Set the lot's direct status
+        finalState: {
+          soldPrice: currentHighestBid || 0,
+          reservePrice: currentLot.reservePrice,
+          performance: this.getLotPerformance(),
+          soldTime: this.auctionService.getCurrentTime(),
+          soldTo: bids.length > 0 ? bids[0].bidder : 'No bidder',
+          soldToId: bids.length > 0 ? bids[0].bidderId : '',
+          bids: [...bids],
+          status: LotStatus.NO_SALE  // Set appropriate status
+        }
+      };
+      
+      this.auctionState.updateLot(updatedLot);
       
       if (!this.hasCreditsError) {
         this.voiceService.speak(`Lot ${currentLot.lotNumber} is marked as no sale.`);
@@ -260,6 +282,28 @@ export class AuctionEventService {
         canUseHammer: false
       });
       this.auctionState.incrementWithdrawnLots();
+
+      // Create final state for Withdrawn
+      const bids = this.auctionState.getValue('bids');
+      const currentHighestBid = this.auctionState.getValue('currentHighestBid');
+      
+      // Update the lot with final state
+      const updatedLot = { 
+        ...currentLot, 
+        status: LotStatus.WITHDRAWN, // Set the lot's direct status
+        finalState: {
+          soldPrice: currentHighestBid || 0,
+          reservePrice: currentLot.reservePrice,
+          performance: this.getLotPerformance(),
+          soldTime: this.auctionService.getCurrentTime(),
+          soldTo: bids.length > 0 ? bids[0].bidder : 'No bidder',
+          soldToId: bids.length > 0 ? bids[0].bidderId : '',
+          bids: [...bids],
+          status: LotStatus.WITHDRAWN  // Set appropriate status
+        }
+      };
+      
+      this.auctionState.updateLot(updatedLot);
       
       if (!this.hasCreditsError) {
         this.voiceService.speak(`Lot ${currentLot.lotNumber} has been withdrawn.`);
@@ -279,7 +323,7 @@ export class AuctionEventService {
       // Update the lot with final state
       const updatedLot = { 
         ...currentLot, 
-        status: LotStatus.SOLD,
+        status: LotStatus.SOLD, // Set the lot's direct status
         finalState: {
           soldPrice: currentHighestBid,
           reservePrice: currentLot.reservePrice,
@@ -287,7 +331,8 @@ export class AuctionEventService {
           soldTime: winningBid.time,
           soldTo: winningBid.bidder,
           soldToId: winningBid.bidderId,
-          bids: [...bids]
+          bids: [...bids],
+          status: LotStatus.SOLD  // Set appropriate status
         }
       };
       
