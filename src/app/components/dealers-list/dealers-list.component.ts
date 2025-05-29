@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Dealer, Message, MessageCount, DealerFilter, DealerStatus } from '../../models/interfaces';
 import { getDealerStatus } from '../../data/mock-dealer-status';
+import { getDealerName, getDealerId } from '../../utils/dealer-utils';
 
 @Component({
   selector: 'app-dealers-list',
@@ -31,14 +32,6 @@ export class DealersListComponent implements OnInit, OnChanges {
   }
 
   // Helper methods for the template
-  getDealerName(dealer: Dealer): string {
-    return `${dealer.FIRSTNAME || ''} ${dealer.LASTNAME || ''}`.trim();
-  }
-
-  getDealerId(dealer: Dealer): string {
-    return (dealer.USR_ID ? dealer.USR_ID.toString() : '') || 
-           (dealer.ID ? dealer.ID.toString() : '');
-  }
 
   setFilter(filter: DealerFilter) {
     this.currentFilter = filter;
@@ -62,7 +55,7 @@ export class DealersListComponent implements OnInit, OnChanges {
     // Apply status filter
     if (this.currentFilter !== 'all') {
       dealers = dealers.filter(dealer => {
-        const dealerId = this.getDealerId(dealer);
+        const dealerId = getDealerId(dealer);
         if (!dealerId) {
           return false;
         }
@@ -86,8 +79,8 @@ export class DealersListComponent implements OnInit, OnChanges {
     if (this.searchTerm.trim()) {
       const term = this.searchTerm.toLowerCase();
       dealers = dealers.filter(dealer => {
-        const name = this.getDealerName(dealer);
-        const dealerId = this.getDealerId(dealer);
+        const name = getDealerName(dealer);
+        const dealerId = getDealerId(dealer);
         const type = dealer.TYPE;
         
         return name.toLowerCase().includes(term) ||
@@ -104,8 +97,8 @@ export class DealersListComponent implements OnInit, OnChanges {
 
     // Sort alphabetically using name from either format
     this.filteredDealers = [...dealers].sort((a, b) => {
-      const nameA = this.getDealerName(a);
-      const nameB = this.getDealerName(b);
+      const nameA = getDealerName(a);
+      const nameB = getDealerName(b);
       return nameA.localeCompare(nameB);
     });
   }
@@ -125,7 +118,7 @@ export class DealersListComponent implements OnInit, OnChanges {
   }
 
   getDealerTooltip(dealer: Dealer): string {
-    const dealerId = this.getDealerId(dealer);
+    const dealerId = getDealerId(dealer);
     const status = getDealerStatus(dealerId || '');
     const lastActive = status ? `\nLast Active: ${status.lastActive}` : '';
     const lastBuy = dealer.LASTBUY ? `\nLast Buy: ${dealer.LASTBUY}` : '';
@@ -162,8 +155,8 @@ ID: ${dealerId}${lastActive}${lastBuy}${lastLogin}
   isSelected(dealer: Dealer): boolean {
     if (!this.selectedDealer) return false;
     
-    const dealerId = this.getDealerId(dealer);
-    const selectedId = this.getDealerId(this.selectedDealer);
+    const dealerId = getDealerId(dealer);
+    const selectedId = this.selectedDealer ? getDealerId(this.selectedDealer) : '';
     
     return dealerId === selectedId;
   }
